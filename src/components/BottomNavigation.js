@@ -6,6 +6,9 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
+import Entypo from '@expo/vector-icons/Entypo';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 const BottomNavigation = () => {
   const [activeTab, setActiveTab] = useState('Home');
@@ -13,22 +16,26 @@ const BottomNavigation = () => {
   const tabs = [
     {
       name: 'Home',
-      icon: '🏠',
+      icon: 'home',
+      iconLibrary: 'Entypo',
       label: 'Home',
     },
     {
       name: 'MyTrip',
-      icon: '🧳',
+      icon: 'ticket-confirmation',
+      iconLibrary: 'MaterialCommunityIcons',
       label: 'My Trip',
     },
     {
       name: 'Favorite',
-      icon: '❤️',
+      icon: 'bookmark-added',
+      iconLibrary: 'MaterialIcons',
       label: 'Favorite',
     },
     {
       name: 'Profile',
-      icon: '👤',
+      icon: 'account',
+      iconLibrary: 'MaterialCommunityIcons',
       label: 'Profile',
     },
   ];
@@ -37,6 +44,23 @@ const BottomNavigation = () => {
     setActiveTab(tabName);
     // Here you would typically handle navigation
     console.log(`Navigating to ${tabName}`);
+  };
+
+  const renderIcon = (tab) => {
+    const isActive = activeTab === tab.name;
+    const iconColor = isActive ? '#4c6ef5' : '#8e8e93';
+    const iconSize = 24;
+
+    switch (tab.iconLibrary) {
+      case 'Entypo':
+        return <Entypo name={tab.icon} size={iconSize} color={iconColor} />;
+      case 'MaterialCommunityIcons':
+        return <MaterialCommunityIcons name={tab.icon} size={iconSize} color={iconColor} />;
+      case 'MaterialIcons':
+        return <MaterialIcons name={tab.icon} size={iconSize} color={iconColor} />;
+      default:
+        return null;
+    }
   };
 
   return (
@@ -50,14 +74,9 @@ const BottomNavigation = () => {
             activeOpacity={0.7}
           >
             <View style={styles.tabContent}>
-              <Text
-                style={[
-                  styles.tabIcon,
-                  activeTab === tab.name && styles.activeTabIcon,
-                ]}
-              >
-                {tab.icon}
-              </Text>
+              <View style={styles.iconContainer}>
+                {renderIcon(tab)}
+              </View>
               <Text
                 style={[
                   styles.tabLabel,
@@ -105,13 +124,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'relative',
   },
-  tabIcon: {
-    fontSize: 22,
+  iconContainer: {
     marginBottom: 4,
-    opacity: 0.6,
-  },
-  activeTabIcon: {
-    opacity: 1,
   },
   tabLabel: {
     fontSize: 12,
