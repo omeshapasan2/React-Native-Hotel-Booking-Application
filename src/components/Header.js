@@ -3,14 +3,20 @@ import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
   Image,
   TouchableOpacity,
+  StatusBar,
+  Platform,
 } from 'react-native';
 
 const Header = () => {
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <View style={styles.headerWrapper}>
+      <StatusBar 
+        barStyle="dark-content" 
+        backgroundColor="#f8f9fa" 
+        translucent={false}
+      />
       <View style={styles.container}>
         {/* Left side - Profile section */}
         <View style={styles.leftSection}>
@@ -37,12 +43,12 @@ const Header = () => {
           </View>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  safeArea: {
+  headerWrapper: {
     backgroundColor: '#f8f9fa',
   },
   container: {
@@ -51,6 +57,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     paddingVertical: 15,
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight + 15 : 15,
     backgroundColor: '#f8f9fa',
   },
   leftSection: {
