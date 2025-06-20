@@ -47,18 +47,25 @@ const TopNearbySection = () => {
 
         {/* Location Dropdown */}
         <View style={styles.dropdownContainer}>
-          <TouchableOpacity
-            style={styles.dropdownButton}
-            onPress={() => setIsDropdownOpen(!isDropdownOpen)}
-          >
-            <MaterialIcons name="location-on" size={16} color="#1E2A78" />
-            <Text style={styles.locationText}>{selectedLocation}</Text>
-            <MaterialIcons 
-              name={isDropdownOpen ? "keyboard-arrow-up" : "keyboard-arrow-down"} 
-              size={16} 
-              color="#1E2A78" 
-            />
-          </TouchableOpacity>
+          <View style={styles.locationSection}>
+            <View style={styles.locationContent}>
+              <Text style={styles.locationLabel}>Location</Text>
+              <TouchableOpacity
+                style={styles.dropdownButton}
+                onPress={() => setIsDropdownOpen(!isDropdownOpen)}
+              >
+                <Text style={styles.locationText}>{selectedLocation}</Text>
+                <MaterialIcons 
+                  name={isDropdownOpen ? "keyboard-arrow-up" : "keyboard-arrow-down"} 
+                  size={16} 
+                  color="#1E2A78" 
+                />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.locationIconContainer}>
+              <MaterialIcons name="gps-fixed" size={20} color="#1E2A78" />
+            </View>
+          </View>
 
           {/* Dropdown Menu */}
           {isDropdownOpen && (
@@ -132,23 +139,39 @@ const styles = StyleSheet.create({
     position: 'relative',
     zIndex: 9999,
   },
+  locationSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  locationContent: {
+    flex: 1,
+  },
+  locationLabel: {
+    fontSize: 12,
+    color: '#999',
+    marginBottom: 2,
+    alignSelf: 'flex-end',
+  },
   dropdownButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#F8F9FA',
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#E9ECEF',
-    minWidth: 140,
+    justifyContent: 'flex-end'
   },
   locationText: {
     fontSize: 14,
     color: '#1E2A78',
-    marginLeft: 4,
+    fontWeight: '600',
     marginRight: 4,
-    flex: 1,
+  },
+  locationIconContainer: {
+    backgroundColor: '#F5F5F5',
+    borderRadius: 6,
+    padding: 8,
+    marginLeft: 8,
+    height: 40,
+    width: 36,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   dropdownMenu: {
     position: 'absolute',
