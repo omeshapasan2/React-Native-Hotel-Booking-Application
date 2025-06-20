@@ -3,13 +3,19 @@ import { View, Text, StyleSheet } from 'react-native';
 import Header from '../components/Header';
 import BottomNavigation from '../components/BottomNavigation';
 import CategoryTabs from '../components/CategoryTabs';
+import SearchBar from '../components/SearchBar';
+import WideHotelCard from '../components/WideHotelCard';
+import HotelCard from '../components/HotelCard';
 
 function HomeScreen() {
   return (
     <View style={styles.container}>
       <Header />
+      <SearchBar/>
       
       <CategoryTabs />
+
+      
       
       <BottomNavigation />
     </View>

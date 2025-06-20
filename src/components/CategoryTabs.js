@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, ScrollView, StyleSheet } from 'react-native';
 import hotels from '../data/hotels'
 import HotelCard from './HotelCard';
 
-const categories = ['Popular', 'Modern', 'Beach', 'Mountain'];
+const categories = ['Popular', 'Modern', 'Beach', 'Mountain', 'Luxury', 'Budget'];
 
 const HotelList = () => {
   const [selectedCategory, setSelectedCategory] = useState('Popular');
@@ -34,46 +34,98 @@ const HotelList = () => {
   );
 
   return (
-    <View style={{ flex: 1, padding: 16 }}>
-      {/* Category Tab Bar */}
-      <View style={styles.tabContainer}>
-        {categories.map(renderCategoryTab)}
+    <View style={{ flex: 1 }}>
+      {/* Category Header */}
+      <View style={styles.headerContainer}>
+        <Text style={styles.categoryTitle}>Category</Text>
+        <TouchableOpacity style={styles.seeAllButton}>
+          <Text style={styles.seeAllText}>See All</Text>
+          <Text style={styles.chevron}> ></Text>
+        </TouchableOpacity>
       </View>
 
+      {/* Category Tab Bar - Full Width Scrollable */}
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={styles.tabContainer}
+        contentContainerStyle={styles.tabContentContainer}
+      >
+        {categories.map(renderCategoryTab)}
+      </ScrollView>
+
       {/* Hotel Cards List */}
-      <FlatList
-        data={filteredHotels}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => <HotelCard hotel={item} />}
-        numColumns={2}
-        columnWrapperStyle={{ justifyContent: 'space-between', marginBottom: 16 }}
-        contentContainerStyle={{ paddingBottom: 16 }}
-        showsVerticalScrollIndicator={false}
-      />
+      <View style={styles.hotelListContainer}>
+        <FlatList
+          data={filteredHotels}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => <HotelCard hotel={item} />}
+          numColumns={2}
+          columnWrapperStyle={{ justifyContent: 'space-between', marginBottom: 16 }}
+          contentContainerStyle={{ paddingBottom: 16 }}
+          showsVerticalScrollIndicator={false}
+        />
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  tabContainer: {
+  headerContainer: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     marginBottom: 16,
+    paddingHorizontal: 16, // Only header has horizontal padding
+  },
+  categoryTitle: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#000',
+  },
+  seeAllButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  seeAllText: {
+    fontSize: 16,
+    color: '#9CA3AF',
+  },
+  chevron: {
+    fontSize: 16,
+    color: '#9CA3AF',
+  },
+  tabContainer: {
+    marginBottom: 16,
+    flexGrow: 0,
+  },
+  tabContentContainer: {
+    paddingHorizontal: 16, // Padding inside the scroll content
   },
   tabButton: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    backgroundColor: '#EEE',
-    borderRadius: 20,
-    marginRight: 8,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 25,
+    marginRight: 12,
+    borderWidth: 1,
+    borderColor: '#D1D5DB',
+    backgroundColor: 'transparent',
   },
   activeTabButton: {
     backgroundColor: '#1E2A78',
+    borderColor: '#1E2A78',
   },
   tabText: {
-    color: '#000',
+    color: '#6B7280',
+    fontSize: 16,
+    fontWeight: '500',
   },
   activeTabText: {
-    color: '#FFF',
+    color: '#FFFFFF',
+  },
+  hotelListContainer: {
+    flex: 1,
+    paddingHorizontal: 16, // Only hotel list has horizontal padding
   },
 });
 

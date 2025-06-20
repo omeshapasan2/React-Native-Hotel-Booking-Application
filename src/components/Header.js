@@ -8,6 +8,7 @@ import {
   StatusBar,
   Platform,
 } from 'react-native';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 const Header = () => {
   return (
@@ -35,7 +36,7 @@ const Header = () => {
         {/* Right side - Notification icon */}
         <TouchableOpacity style={styles.notificationContainer}>
           <View style={styles.notificationIcon}>
-            <Text style={styles.notificationIconText}>✉</Text>
+            <Ionicons name="mail" size={24} color="#1E2A78" />
             {/* Notification badge */}
             <View style={styles.notificationBadge}>
               <Text style={styles.badgeText}>1</Text>
@@ -87,30 +88,27 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   notificationIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#4c6ef5',
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: '#F3F4F6',
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
-  },
-  notificationIconText: {
-    color: 'white',
-    fontSize: 16,
   },
   notificationBadge: {
     position: 'absolute',
     top: -2,
     right: -2,
-    backgroundColor: '#ff3b30',
-    borderRadius: 10,
-    width: 20,
-    height: 20,
+    backgroundColor: '#EC4899',
+    borderRadius: 18,
+    minWidth: 24,
+    height: 24,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 2,
     borderColor: '#f8f9fa',
+    paddingHorizontal: 4,
   },
   badgeText: {
     color: 'white',
