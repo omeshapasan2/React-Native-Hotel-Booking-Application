@@ -24,7 +24,7 @@ const hotels = [
     {
         id: 3,
         name: "Keraton Villa",
-        category: ["Popular", "Modern"],
+        category: ["Modern"],
         image: require("../assets/images/hotels/KeratonVilla.jpg"),
         rating: 4.8,
         price: 225,
@@ -33,3 +33,5 @@ const hotels = [
         isFavorite: true
     }
 ];
+
+export default hotels;

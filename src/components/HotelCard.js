@@ -8,9 +8,10 @@ import {
   Dimensions,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import hotels from '../data/hotels';
 
 const { width } = Dimensions.get('window');
-const cardWidth = (width - 48) / 2; // Assuming 16px margin on each side and 16px gap
+const cardWidth = (width - 48) / 2; 
 
 const HotelCard = ({ hotel, onPress, onFavoritePress }) => {
   const {
@@ -38,7 +39,7 @@ const HotelCard = ({ hotel, onPress, onFavoritePress }) => {
     >
       <View style={styles.imageContainer}>
         <Image
-          source={image ? { uri: image } : require('./placeholder-hotel.jpg')}
+          source={image || require('../assets/images/placeholder-hotel.jpg')}
           style={styles.image}
           resizeMode="cover"
         />
@@ -46,17 +47,6 @@ const HotelCard = ({ hotel, onPress, onFavoritePress }) => {
           <Icon name="star" size={12} color="#FFA500" />
           <Text style={styles.ratingText}>{rating}</Text>
         </View>
-        <TouchableOpacity
-          style={styles.favoriteButton}
-          onPress={handleFavoritePress}
-          activeOpacity={0.7}
-        >
-          <Icon
-            name={isFavorite ? "favorite" : "favorite-border"}
-            size={20}
-            color={isFavorite ? "#FF6B9D" : "#FFF"}
-          />
-        </TouchableOpacity>
       </View>
       
       <View style={styles.content}>
@@ -82,28 +72,31 @@ const HotelCard = ({ hotel, onPress, onFavoritePress }) => {
             <Text style={styles.nightText}>/NIGHT</Text>
           </View>
         </View>
+        
+        <TouchableOpacity
+          style={styles.favoriteButton}
+          onPress={handleFavoritePress}
+          activeOpacity={0.7}
+        >
+          <Icon
+            name={isFavorite ? "favorite" : "favorite-border"}
+            size={20}
+            color={isFavorite ? "#FF6B9D" : "#FF6B9D"}
+          />
+        </TouchableOpacity>
       </View>
     </TouchableOpacity>
   );
 };
 
-
-
 const styles = StyleSheet.create({
-
   card: {
     width: cardWidth,
     backgroundColor: '#FFF',
     borderRadius: 12,
     marginBottom: 16,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 4,
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
   },
   imageContainer: {
     position: 'relative',
@@ -119,7 +112,7 @@ const styles = StyleSheet.create({
   ratingContainer: {
     position: 'absolute',
     top: 8,
-    left: 8,
+    right: 8,
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.6)',
@@ -133,28 +126,20 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginLeft: 2,
   },
-  favoriteButton: {
-    position: 'absolute',
-    top: 8,
-    right: 8,
-    width: 28,
-    height: 28,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   content: {
     padding: 12,
+    position: 'relative',
   },
   hotelName: {
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '800',
     color: '#333',
-    marginBottom: 4,
+    marginBottom: 6,
   },
   locationContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: 12,
   },
   locationText: {
     fontSize: 12,
@@ -193,6 +178,17 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: '#999',
     marginLeft: 2,
+  },
+  favoriteButton: {
+    position: 'absolute',
+    bottom: 12,
+    right: 12,
+    width: 32,
+    height: 32,
+    backgroundColor: 'rgba(255, 107, 157, 0.1)',
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

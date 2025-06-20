@@ -2,21 +2,14 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Header from '../components/Header';
 import BottomNavigation from '../components/BottomNavigation';
+import CategoryTabs from '../components/CategoryTabs';
 
 function HomeScreen() {
   return (
     <View style={styles.container}>
       <Header />
       
-      {/* Main content area - you'll add your other components here */}
-      <View style={styles.content}>
-        <Text style={styles.placeholderText}>
-          Main content will go here
-        </Text>
-        <Text style={styles.placeholderText}>
-          (SearchBar, CategoryTabs, HotelCards, etc.)
-        </Text>
-      </View>
+      <CategoryTabs />
       
       <BottomNavigation />
     </View>
