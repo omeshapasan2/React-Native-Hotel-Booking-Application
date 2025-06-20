@@ -6,6 +6,7 @@ import CategoryTabs from '../components/CategoryTabs';
 import SearchBar from '../components/SearchBar';
 import WideHotelCard from '../components/WideHotelCard';
 import HotelCard from '../components/HotelCard';
+import TopNearbySection from '../components/TopNearbySection';
 
 function HomeScreen() {
   return (
@@ -15,7 +16,7 @@ function HomeScreen() {
       
       <CategoryTabs />
 
-      
+      <TopNearbySection/>
       
       <BottomNavigation />
     </View>
