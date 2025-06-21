@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import hotels from '../data/hotels';
 import WideHotelCard from './WideHotelCard';
@@ -93,22 +93,17 @@ const TopNearbySection = () => {
         </View>
       </View>
 
-      {/* Hotel List */}
-      <FlatList
-        data={filteredHotels}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
+      {/* Hotel List - Changed from FlatList to map for better integration */}
+      <View style={styles.hotelListContainer}>
+        {filteredHotels.map((hotel) => (
           <WideHotelCard
-            hotel={item}
+            key={hotel.id.toString()}
+            hotel={hotel}
             onPress={handleHotelPress}
             onFavoritePress={handleFavoritePress}
           />
-        )}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.listContainer}
-        scrollEnabled={false}
-        nestedScrollEnabled={true}
-      />
+        ))}
+      </View>
     </View>
   );
 };
@@ -116,12 +111,13 @@ const TopNearbySection = () => {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 16,
+    // marginTop: 16, // Reduced from default, adjust as needed
   },
   headerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: 16, // Consistent spacing
     zIndex: 9998,
     position: 'relative',
   },
@@ -137,6 +133,7 @@ const styles = StyleSheet.create({
   },
   dropdownContainer: {
     position: 'relative',
+    elevation: 10,
     zIndex: 9999,
   },
   locationSection: {
@@ -174,7 +171,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   dropdownMenu: {
-    position: 'absolute',
+    position: 'relative',
     top: '100%',
     right: 0,
     backgroundColor: '#FFF',
@@ -212,8 +209,8 @@ const styles = StyleSheet.create({
     color: '#1E2A78',
     fontWeight: '600',
   },
-  listContainer: {
-    paddingBottom: 16,
+  hotelListContainer: {
+    // gap: 12, // Consistent gap between hotel cards
   },
 });
 

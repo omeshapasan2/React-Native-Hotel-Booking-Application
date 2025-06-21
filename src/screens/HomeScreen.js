@@ -1,11 +1,11 @@
+HomeScreen.js
+
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import Header from '../components/Header';
 import BottomNavigation from '../components/BottomNavigation';
 import CategoryTabs from '../components/CategoryTabs';
 import SearchBar from '../components/SearchBar';
-import WideHotelCard from '../components/WideHotelCard';
-import HotelCard from '../components/HotelCard';
 import TopNearbySection from '../components/TopNearbySection';
 
 function HomeScreen() {
@@ -14,9 +14,16 @@ function HomeScreen() {
       <Header />
       <SearchBar/>
       
-      <CategoryTabs />
-
-      <TopNearbySection/>
+      <ScrollView
+        style={styles.scrollContainer}
+        contentContainerStyle={[styles.scrollContent, { paddingBottom: 80 }]} // ensure bottom nav doesn't block
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+      >
+        <CategoryTabs />
+        <View style={{ height: 0 }} />
+        <TopNearbySection/>
+      </ScrollView>
       
       <BottomNavigation />
     </View>
@@ -27,6 +34,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f8f9fa',
+  },
+  scrollContainer: {
+    flex: 1,
+  },
+  scrollContent: {
+    paddingBottom: 20,
   },
   content: {
     flex: 1,

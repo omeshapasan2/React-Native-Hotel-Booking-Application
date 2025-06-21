@@ -5,7 +5,7 @@ import HotelCard from './HotelCard';
 
 const categories = ['Popular', 'Modern', 'Beach', 'Mountain', 'Luxury', 'Budget'];
 
-const HotelList = () => {
+const CategoryTabs = () => {
   const [selectedCategory, setSelectedCategory] = useState('Popular');
 
   // Filter the hotels based on selected category
@@ -34,13 +34,13 @@ const HotelList = () => {
   );
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.container}>
       {/* Category Header */}
       <View style={styles.headerContainer}>
         <Text style={styles.categoryTitle}>Category</Text>
         <TouchableOpacity style={styles.seeAllButton}>
           <Text style={styles.seeAllText}>See All</Text>
-          <Text style={styles.chevron}> ></Text>
+          <Text style={styles.chevron}> {'>'}</Text>
         </TouchableOpacity>
       </View>
 
@@ -61,9 +61,10 @@ const HotelList = () => {
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => <HotelCard hotel={item} />}
           numColumns={2}
-          columnWrapperStyle={{ justifyContent: 'space-between', marginBottom: 16 }}
-          contentContainerStyle={{ paddingBottom: 16 }}
+          columnWrapperStyle={{ justifyContent: 'space-between', marginBottom: 0 }}
+          contentContainerStyle={{ paddingBottom: 0 }} // Remove bottom padding
           showsVerticalScrollIndicator={false}
+          scrollEnabled={false} // Disable inner scrolling since parent handles it
         />
       </View>
     </View>
@@ -71,18 +72,27 @@ const HotelList = () => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    // marginBottom: 16, // Add consistent bottom margin for spacing
+  },
+
+  // Category Header
   headerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 16,
-    paddingHorizontal: 16, // Only header has horizontal padding
+    paddingHorizontal: 16,
   },
+
+  // Category Title
   categoryTitle: {
     fontSize: 22,
     fontWeight: 'bold',
     color: '#000',
   },
+
+  // See All Button
   seeAllButton: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -95,12 +105,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#9CA3AF',
   },
+  // Between the cards and tab bar
   tabContainer: {
     marginBottom: 16,
     flexGrow: 0,
   },
+  // Tab bar left side padding
   tabContentContainer: {
-    paddingHorizontal: 16, // Padding inside the scroll content
+    paddingHorizontal: 16,
   },
   tabButton: {
     paddingHorizontal: 20,
@@ -123,10 +135,10 @@ const styles = StyleSheet.create({
   activeTabText: {
     color: '#FFFFFF',
   },
+  // Space Between hotel cards
   hotelListContainer: {
-    flex: 1,
-    paddingHorizontal: 16, // Only hotel list has horizontal padding
+    paddingHorizontal: 16,
   },
 });
 
-export default HotelList;
+export default CategoryTabs;
