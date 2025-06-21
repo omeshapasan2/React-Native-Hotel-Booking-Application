@@ -9,10 +9,17 @@ import {
   Platform,
 } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { useProfile } from '../context/ProfileContext';
 
 const Header = ({ navigation }) => {
+  const { profileData } = useProfile();
+
   const handleNotificationPress = () => {
     navigation.navigate('Messages');
+  };
+
+  const handleProfilePress = () => {
+    navigation.navigate('Profile');
   };
 
   return (
@@ -24,18 +31,16 @@ const Header = ({ navigation }) => {
       />
       <View style={styles.container}>
         {/* Left side - Profile section */}
-        <View style={styles.leftSection}>
+        <TouchableOpacity style={styles.leftSection} onPress={handleProfilePress}>
           <Image
-            source={{
-              uri: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
-            }}
+            source={{ uri: profileData.profileImage }}
             style={styles.profileImage}
           />
           <View style={styles.greetingContainer}>
             <Text style={styles.greetingText}>Hello there</Text>
-            <Text style={styles.nameText}>Antony William</Text>
+            <Text style={styles.nameText}>{profileData.name}</Text>
           </View>
-        </View>
+        </TouchableOpacity>
 
         {/* Right side - Notification icon */}
         <TouchableOpacity 

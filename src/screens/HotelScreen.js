@@ -15,10 +15,7 @@ import { useFavorites } from '../context/FavoritesContext';
 import hotels from '../data/hotels';
 import { useRoute } from '@react-navigation/native';
 
-
-
-
-
+// Get device dimensions
 const { width, height } = Dimensions.get('window');
 
 // Responsive scaling functions
@@ -61,9 +58,8 @@ const HotelScreen = ({ navigation }) => {
 
 
     const handleBookNow = () => {
-        // Add booking logic here
-        console.log('Booking hotel:', name);
-        // navigation.navigate('BookingScreen', { hotel });
+        // console.log('Booking hotel:', name);
+        navigation.navigate('Booking', { hotel });
     };
 
     const handleGoBack = () => {

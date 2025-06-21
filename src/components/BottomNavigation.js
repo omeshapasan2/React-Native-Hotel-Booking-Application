@@ -28,7 +28,7 @@ const BottomNavigation = () => {
       icon: 'ticket-confirmation',
       iconLibrary: 'MaterialCommunityIcons',
       label: 'My Trip',
-      screenName: null,
+      screenName: 'MyTrips',
     },
     {
       name: 'Favorite',
@@ -42,7 +42,7 @@ const BottomNavigation = () => {
       icon: 'account',
       iconLibrary: 'MaterialCommunityIcons',
       label: 'Profile',
-      screenName: null,
+      screenName: 'Profile',
     },
   ];
 
