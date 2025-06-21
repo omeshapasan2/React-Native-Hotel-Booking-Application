@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-nati
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import hotels from '../data/hotels';
 import WideHotelCard from './WideHotelCard';
+import { useFavorites } from '../context/FavoritesContext';
 
 const { width, height } = Dimensions.get('window');
 
@@ -28,14 +29,22 @@ const locations = [
 const TopNearbySection = () => {
   const [selectedLocation, setSelectedLocation] = useState('Sleman, DIY');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const { getHotelsWithFavorites, toggleFavorite } = useFavorites();
 
   const filteredHotels = hotels.filter(hotel => 
     hotel.location === selectedLocation
   );
 
+  // Get hotels with updated favorite status
+  const hotelsWithFavorites = getHotelsWithFavorites(filteredHotels);
+
   const handleFavoritePress = (hotelId) => {
-    console.log('Favorite pressed for hotel:', hotelId);
+    toggleFavorite(hotelId);
   };
+
+  // const handleFavoritePress = (hotelId) => {
+  //   console.log('Favorite pressed for hotel:', hotelId);
+  // };
 
   const handleHotelPress = (hotel) => {
     console.log('Hotel pressed:', hotel.name);
@@ -108,7 +117,7 @@ const TopNearbySection = () => {
 
       {/* Hotel List */}
       <View style={styles.hotelListContainer}>
-        {filteredHotels.map((hotel) => (
+        {hotelsWithFavorites.map((hotel) => (
           <WideHotelCard
             key={hotel.id.toString()}
             hotel={hotel}

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, FlatList, ScrollView, StyleSheet, Dimensions } from 'react-native';
-import hotels from '../data/hotels'
+import hotels from '../data/hotels';
 import HotelCard from './HotelCard';
+import { useFavorites } from '../context/FavoritesContext';
 
 const { width, height } = Dimensions.get('window');
 const categories = ['Popular', 'Modern', 'Beach', 'Mountain', 'Luxury', 'Budget'];
@@ -13,10 +14,25 @@ const moderateScale = (size, factor = 0.5) => size + (scale(size) - size) * fact
 
 const CategoryTabs = () => {
   const [selectedCategory, setSelectedCategory] = useState('Popular');
+  const { getHotelsWithFavorites, toggleFavorite } = useFavorites();
 
+  // Filter hotels by selected category and add favorite status
   const filteredHotels = hotels.filter(hotel =>
     hotel.category.includes(selectedCategory)
   );
+  
+  // Get hotels with updated favorite status
+  const hotelsWithFavorites = getHotelsWithFavorites(filteredHotels);
+
+  const handleFavoritePress = (hotelId) => {
+    toggleFavorite(hotelId);
+  };
+
+  const handleHotelPress = (hotel) => {
+    console.log('Navigate to hotel detail:', hotel.name);
+    // Add navigation logic here if needed
+    // navigation.navigate('HotelDetail', { hotel });
+  };
 
   const renderCategoryTab = (category) => (
     <TouchableOpacity
@@ -40,7 +56,11 @@ const CategoryTabs = () => {
 
   const renderHotelCard = ({ item }) => (
     <View style={styles.cardWrapper}>
-      <HotelCard hotel={item} />
+      <HotelCard
+        hotel={item}
+        onPress={handleHotelPress}
+        onFavoritePress={handleFavoritePress}
+      />
     </View>
   );
 
@@ -65,18 +85,18 @@ const CategoryTabs = () => {
         {categories.map(renderCategoryTab)}
       </ScrollView>
 
-      {/* Hotel Cards List - Now Horizontal */}
+      {/* Hotel Cards List - Horizontal */}
       <View style={styles.hotelListContainer}>
         <FlatList
-          key="horizontal-hotel-list" // Add key to force fresh render
-          data={filteredHotels}
+          key="horizontal-hotel-list"
+          data={hotelsWithFavorites}
           keyExtractor={(item) => item.id.toString()}
           renderItem={renderHotelCard}
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.horizontalFlatListContent}
           ItemSeparatorComponent={() => <View style={styles.cardSeparator} />}
-          snapToInterval={scale(280)} // Adjust based on your card width
+          snapToInterval={scale(188)} // Adjusted for card width + separator
           decelerationRate="fast"
           snapToAlignment="start"
         />
@@ -88,7 +108,7 @@ const CategoryTabs = () => {
 const styles = StyleSheet.create({
   container: {
     marginTop: verticalScale(20), 
-    marginBottom: verticalScale(20), // Responsive bottom margin
+    marginBottom: verticalScale(20),
   },
   headerContainer: {
     flexDirection: 'row',
@@ -143,17 +163,16 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   hotelListContainer: {
-    // Remove horizontal padding to allow full-width scrolling
+    // Container for the horizontal list
   },
   cardWrapper: {
-    width: scale(180), // Set a fixed width for each card
-    // You can adjust this width based on your HotelCard component size
+    width: scale(180), // Fixed width for each card
   },
   cardSeparator: {
-    // width: scale(8), // Reduced space between cards
+    width: scale(8), // Space between cards
   },
   horizontalFlatListContent: {
-    paddingHorizontal: scale(16), // Add padding to the content
+    paddingHorizontal: scale(16),
   },
 });
 

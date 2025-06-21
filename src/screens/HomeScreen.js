@@ -1,4 +1,3 @@
-import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import Header from '../components/Header';
 import BottomNavigation from '../components/BottomNavigation';
@@ -7,6 +6,7 @@ import SearchBar from '../components/SearchBar';
 import TopNearbySection from '../components/TopNearbySection';
 
 function HomeScreen() {
+  
   return (
     <View style={styles.container}>
       <Header />

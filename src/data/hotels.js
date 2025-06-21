@@ -8,7 +8,8 @@ const hotels = [
         price: 125,
         discountedPrice: null,
         location: "Sleman, DIY",
-        isFavorite: true
+        isFavorite: true,
+	    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     },
     {
         id: 2,
@@ -19,7 +20,8 @@ const hotels = [
         price: 130,
         discountedPrice: null,
         location: "Sleman, DIY",
-        isFavorite: false
+        isFavorite: false,
+	    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     },
     {
         id: 3,
@@ -30,7 +32,9 @@ const hotels = [
         price: 225,
         discountedPrice: 200,
         location: "Sleman, DIY",
-        isFavorite: true
+        isFavorite: true,
+	    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+ 
     },
     {
         id: 4,
@@ -41,7 +45,9 @@ const hotels = [
         price: 320,
         discountedPrice: 280,
         location: "Orchard Road, Singapore",
-        isFavorite: false
+        isFavorite: false,
+	    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+ 
     },
     {
         id: 5,
@@ -52,7 +58,9 @@ const hotels = [
         price: 180,
         discountedPrice: null,
         location: "Colombo, Sri Lanka",
-        isFavorite: false
+        isFavorite: false,
+	    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+ 
     },
     {
         id: 6,
@@ -63,7 +71,9 @@ const hotels = [
         price: 95,
         discountedPrice: 85,
         location: "Kandy, Sri Lanka",
-        isFavorite: false
+        isFavorite: false,
+	    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+ 
     },
     {
         id: 7,
@@ -74,7 +84,9 @@ const hotels = [
         price: 200,
         discountedPrice: null,
         location: "Colombo, Sri Lanka",
-        isFavorite: false
+        isFavorite: false,
+	    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+ 
     },
     {
         id: 8,
@@ -85,7 +97,9 @@ const hotels = [
         price: 85,
         discountedPrice: null,
         location: "Lavender, Singapore",
-        isFavorite: false
+        isFavorite: false,
+	    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+ 
     },
     {
         id: 9,
@@ -96,7 +110,9 @@ const hotels = [
         price: 150,
         discountedPrice: 135,
         location: "Goa, India",
-        isFavorite: false
+        isFavorite: false,
+	    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+ 
     },
     {
         id: 10,
@@ -107,7 +123,9 @@ const hotels = [
         price: 220,
         discountedPrice: null,
         location: "Colombo, Sri Lanka",
-        isFavorite: false
+        isFavorite: false,
+	    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+ 
     },
     {
         id: 11,
@@ -118,7 +136,9 @@ const hotels = [
         price: 190,
         discountedPrice: 170,
         location: "Tanglin, Singapore",
-        isFavorite: false
+        isFavorite: false,
+	    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+ 
     },
     {
         id: 12,
@@ -129,7 +149,9 @@ const hotels = [
         price: 160,
         discountedPrice: null,
         location: "Colombo, Sri Lanka",
-        isFavorite: false
+        isFavorite: false,
+	    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+ 
     },
     {
         id: 13,
@@ -140,7 +162,9 @@ const hotels = [
         price: 140,
         discountedPrice: 125,
         location: "Colombo, Sri Lanka",
-        isFavorite: false
+        isFavorite: false,
+	    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+ 
     },
     {
         id: 14,
@@ -151,7 +175,9 @@ const hotels = [
         price: 175,
         discountedPrice: null,
         location: "Bentota, Sri Lanka",
-        isFavorite: false
+        isFavorite: false,
+	    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+ 
     },
     {
         id: 15,
@@ -162,7 +188,9 @@ const hotels = [
         price: 165,
         discountedPrice: 145,
         location: "Clarke Quay, Singapore",
-        isFavorite: false
+        isFavorite: false,
+	    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+ 
     },
     {
         id: 16,
@@ -173,7 +201,9 @@ const hotels = [
         price: 280,
         discountedPrice: null,
         location: "Sentosa Island, Singapore",
-        isFavorite: false
+        isFavorite: false,
+	    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+ 
     },
     {
         id: 17,
@@ -184,7 +214,9 @@ const hotels = [
         price: 120,
         discountedPrice: 105,
         location: "Colombo, Sri Lanka",
-        isFavorite: false
+        isFavorite: false,
+	    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+ 
     },
     {
         id: 18,
@@ -195,7 +227,9 @@ const hotels = [
         price: 100,
         discountedPrice: 80,
         location: "Unawatuna, Sri Lanka",
-        isFavorite: false
+        isFavorite: false,
+	    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+ 
     }
 ];
 
