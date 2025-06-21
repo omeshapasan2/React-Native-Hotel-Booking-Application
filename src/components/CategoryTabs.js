@@ -87,6 +87,7 @@ const CategoryTabs = () => {
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: verticalScale(20), 
     marginBottom: verticalScale(20), // Responsive bottom margin
   },
   headerContainer: {

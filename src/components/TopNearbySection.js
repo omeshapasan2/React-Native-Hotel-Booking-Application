@@ -13,10 +13,16 @@ const moderateScale = (size, factor = 0.5) => size + (scale(size) - size) * fact
 
 const locations = [
   'Sleman, DIY',
-  'Bantul, DIY', 
-  'Kulon Progo, DIY',
-  'Gunung Kidul, DIY',
-  'Yogyakarta City, DIY'
+  'Orchard Road, Singapore',
+  'Colombo, Sri Lanka',
+  'Kandy, Sri Lanka',
+  'Lavender, Singapore',
+  'Goa, India',
+  'Tanglin, Singapore',
+  'Bentota, Sri Lanka',
+  'Clarke Quay, Singapore',
+  'Sentosa Island, Singapore',
+  'Unawatuna, Sri Lanka'
 ];
 
 const TopNearbySection = () => {
@@ -118,7 +124,8 @@ const TopNearbySection = () => {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: scale(16),
-    marginTop: verticalScale(8), // Reduced gap from CategoryTabs
+    marginTop: verticalScale(8), 
+    marginBottom: verticalScale(300),
   },
   headerContainer: {
     flexDirection: 'row',
