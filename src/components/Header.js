@@ -10,7 +10,11 @@ import {
 } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-const Header = () => {
+const Header = ({ navigation }) => {
+  const handleNotificationPress = () => {
+    navigation.navigate('Messages');
+  };
+
   return (
     <View style={styles.headerWrapper}>
       <StatusBar 
@@ -34,7 +38,10 @@ const Header = () => {
         </View>
 
         {/* Right side - Notification icon */}
-        <TouchableOpacity style={styles.notificationContainer}>
+        <TouchableOpacity 
+          style={styles.notificationContainer}
+          onPress={handleNotificationPress}
+        >
           <View style={styles.notificationIcon}>
             <Ionicons name="mail" size={24} color="#1E2A78" />
             {/* Notification badge */}

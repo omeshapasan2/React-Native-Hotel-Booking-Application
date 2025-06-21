@@ -12,6 +12,12 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useFavorites } from '../context/FavoritesContext';
+import hotels from '../data/hotels';
+import { useRoute } from '@react-navigation/native';
+
+
+
+
 
 const { width, height } = Dimensions.get('window');
 
@@ -20,196 +26,208 @@ const scale = (size) => (width / 375) * size;
 const verticalScale = (size) => (height / 812) * size;
 const moderateScale = (size, factor = 0.5) => size + (scale(size) - size) * factor;
 
-const HotelScreen = ({ route, navigation }) => {
-  const { hotel } = route.params;
-  const { favorites, toggleFavorite } = useFavorites();
+const HotelScreen = ({ navigation }) => {
+
+    const route = useRoute();
+    const hotel = route?.params?.hotel;
   
-  const isFavorite = favorites.includes(hotel.id);
+    if (!hotel) {
+        return (
+            <View style={styles.container}>
+                <Text>Hotel not found</Text>
+            </View>
+        );
+    }
 
-  const {
-    id,
-    name,
-    image,
-    rating,
-    price,
-    discountedPrice,
-    location,
-    description,
-    category
-  } = hotel;
+    const { isFavorite , toggleFavorite } = useFavorites();
+    
+    const isHotelFavorite  = isFavorite(hotel.id);
 
-  const handleFavoritePress = () => {
-    toggleFavorite(id);
-  };
+    const handleFavoritePress = () => {
+        toggleFavorite(hotel.id);
+    };
 
-  const handleBookNow = () => {
-    // Add booking logic here
-    console.log('Booking hotel:', name);
-    // navigation.navigate('BookingScreen', { hotel });
-  };
+    const {
+        id,
+        name,
+        image,
+        rating,
+        price,
+        discountedPrice,
+        location,
+        description,
+        category
+    } = hotel;
 
-  const handleGoBack = () => {
-    navigation.goBack();
-  };
 
-  const amenities = [
-    { icon: 'wifi', name: 'Free WiFi' },
-    { icon: 'pool', name: 'Swimming Pool' },
-    { icon: 'restaurant', name: 'Restaurant' },
-    { icon: 'local-parking', name: 'Free Parking' },
-    { icon: 'fitness-center', name: 'Fitness Center' },
-    { icon: 'room-service', name: 'Room Service' },
-  ];
+    const handleBookNow = () => {
+        // Add booking logic here
+        console.log('Booking hotel:', name);
+        // navigation.navigate('BookingScreen', { hotel });
+    };
 
-  return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
-      
-      <ScrollView style={styles.scrollContainer} showsVerticalScrollIndicator={false}>
-        {/* Header Image */}
-        <View style={styles.imageContainer}>
-          <Image
-            source={image || require('../assets/images/placeholder-hotel.jpg')}
-            style={styles.headerImage}
-            resizeMode="cover"
-          />
-          
-          {/* Header Controls */}
-          <View style={styles.headerControls}>
-            <TouchableOpacity
-              style={styles.backButton}
-              onPress={handleGoBack}
-              activeOpacity={0.7}
-            >
-              <Icon name="arrow-back" size={moderateScale(24)} color="#FFF" />
-            </TouchableOpacity>
+    const handleGoBack = () => {
+        navigation.goBack();
+    };
+
+    const amenities = [
+        { icon: 'wifi', name: 'Free WiFi' },
+        { icon: 'pool', name: 'Swimming Pool' },
+        { icon: 'restaurant', name: 'Restaurant' },
+        { icon: 'local-parking', name: 'Free Parking' },
+        { icon: 'fitness-center', name: 'Fitness Center' },
+        { icon: 'room-service', name: 'Room Service' },
+    ];
+
+    return (
+        <SafeAreaView style={styles.container}>
+        <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
+        
+        <ScrollView style={styles.scrollContainer} showsVerticalScrollIndicator={false}>
+            {/* Header Image */}
+            <View style={styles.imageContainer}>
+            <Image
+                source={image || require('../assets/images/placeholder-hotel.jpg')}
+                style={styles.headerImage}
+                resizeMode="cover"
+            />
             
+            {/* Header Controls */}
+            <View style={styles.headerControls}>
+                <TouchableOpacity
+                style={styles.backButton}
+                onPress={handleGoBack}
+                activeOpacity={0.7}
+                >
+                <Icon name="arrow-back" size={moderateScale(24)} color="#FFF" />
+                </TouchableOpacity>
+                
+                <TouchableOpacity
+                style={styles.favoriteHeaderButton}
+                onPress={handleFavoritePress}
+                activeOpacity={0.7}
+                >
+                <Icon
+                    name={isHotelFavorite ? "favorite" : "favorite-border"}
+                    size={moderateScale(24)}
+                    color={isHotelFavorite ? "#FF6B9D" : "#FFF"}
+                />
+                </TouchableOpacity>
+            </View>
+
+            {/* Rating Badge */}
+            <View style={styles.ratingBadge}>
+                <Icon name="star" size={moderateScale(16)} color="#FFA500" />
+                <Text style={styles.ratingBadgeText}>{rating}</Text>
+            </View>
+            </View>
+
+            {/* Content */}
+            <View style={styles.contentContainer}>
+            {/* Hotel Name and Location */}
+            <View style={styles.titleSection}>
+                <Text style={styles.hotelName}>{name}</Text>
+                <View style={styles.locationContainer}>
+                <Icon name="location-on" size={moderateScale(16)} color="#FFA500" />
+                <Text style={styles.locationText}>{location}</Text>
+                </View>
+            </View>
+
+            {/* Categories */}
+            <View style={styles.categoriesSection}>
+                <Text style={styles.sectionTitle}>Categories</Text>
+                <View style={styles.categoriesContainer}>
+                {category.map((cat, index) => (
+                    <View key={index} style={styles.categoryTag}>
+                    <Text style={styles.categoryText}>{cat}</Text>
+                    </View>
+                ))}
+                </View>
+            </View>
+
+            {/* Price Section */}
+            <View style={styles.priceSection}>
+                <Text style={styles.sectionTitle}>Price</Text>
+                <View style={styles.priceContainer}>
+                <Text style={styles.startFromText}>Starting from</Text>
+                <View style={styles.priceRow}>
+                    {discountedPrice ? (
+                    <>
+                        <Text style={styles.originalPrice}>${price}</Text>
+                        <Text style={styles.discountedPrice}>${discountedPrice}</Text>
+                    </>
+                    ) : (
+                    <Text style={styles.currentPrice}>${price}</Text>
+                    )}
+                    <Text style={styles.nightText}>/NIGHT</Text>
+                </View>
+                </View>
+            </View>
+
+            {/* Description */}
+            <View style={styles.descriptionSection}>
+                <Text style={styles.sectionTitle}>About This Hotel</Text>
+                <Text style={styles.descriptionText}>{description}</Text>
+            </View>
+
+            {/* Amenities */}
+            <View style={styles.amenitiesSection}>
+                <Text style={styles.sectionTitle}>Amenities</Text>
+                <View style={styles.amenitiesGrid}>
+                {amenities.map((amenity, index) => (
+                    <View key={index} style={styles.amenityItem}>
+                    <Icon name={amenity.icon} size={moderateScale(24)} color="#1E2A78" />
+                    <Text style={styles.amenityText}>{amenity.name}</Text>
+                    </View>
+                ))}
+                </View>
+            </View>
+
+            {/* Reviews Section */}
+            <View style={styles.reviewsSection}>
+                <View style={styles.reviewsHeader}>
+                <Text style={styles.sectionTitle}>Reviews</Text>
+                <TouchableOpacity style={styles.seeAllReviews}>
+                    <Text style={styles.seeAllText}>See All</Text>
+                    <Icon name="chevron-right" size={moderateScale(16)} color="#9CA3AF" />
+                </TouchableOpacity>
+                </View>
+                
+                <View style={styles.reviewSummary}>
+                <View style={styles.ratingOverview}>
+                    <Text style={styles.overallRating}>{rating}</Text>
+                    <View style={styles.starsContainer}>
+                    {[1, 2, 3, 4, 5].map((star) => (
+                        <Icon
+                        key={star}
+                        name="star"
+                        size={moderateScale(16)}
+                        color={star <= Math.floor(rating) ? "#FFA500" : "#E5E5E5"}
+                        />
+                    ))}
+                    </View>
+                    <Text style={styles.reviewsCount}>Based on 1,234 reviews</Text>
+                </View>
+                </View>
+            </View>
+
+            {/* Bottom spacing for button */}
+            <View style={styles.bottomSpacing} />
+            </View>
+        </ScrollView>
+
+        {/* Book Now Button - Fixed at bottom */}
+        <View style={styles.bookingContainer}>
             <TouchableOpacity
-              style={styles.favoriteHeaderButton}
-              onPress={handleFavoritePress}
-              activeOpacity={0.7}
+            style={styles.bookNowButton}
+            onPress={handleBookNow}
+            activeOpacity={0.8}
             >
-              <Icon
-                name={isFavorite ? "favorite" : "favorite-border"}
-                size={moderateScale(24)}
-                color={isFavorite ? "#FF6B9D" : "#FFF"}
-              />
+            <Text style={styles.bookNowText}>Book Now</Text>
             </TouchableOpacity>
-          </View>
-
-          {/* Rating Badge */}
-          <View style={styles.ratingBadge}>
-            <Icon name="star" size={moderateScale(16)} color="#FFA500" />
-            <Text style={styles.ratingBadgeText}>{rating}</Text>
-          </View>
         </View>
-
-        {/* Content */}
-        <View style={styles.contentContainer}>
-          {/* Hotel Name and Location */}
-          <View style={styles.titleSection}>
-            <Text style={styles.hotelName}>{name}</Text>
-            <View style={styles.locationContainer}>
-              <Icon name="location-on" size={moderateScale(16)} color="#FFA500" />
-              <Text style={styles.locationText}>{location}</Text>
-            </View>
-          </View>
-
-          {/* Categories */}
-          <View style={styles.categoriesSection}>
-            <Text style={styles.sectionTitle}>Categories</Text>
-            <View style={styles.categoriesContainer}>
-              {category.map((cat, index) => (
-                <View key={index} style={styles.categoryTag}>
-                  <Text style={styles.categoryText}>{cat}</Text>
-                </View>
-              ))}
-            </View>
-          </View>
-
-          {/* Price Section */}
-          <View style={styles.priceSection}>
-            <Text style={styles.sectionTitle}>Price</Text>
-            <View style={styles.priceContainer}>
-              <Text style={styles.startFromText}>Starting from</Text>
-              <View style={styles.priceRow}>
-                {discountedPrice ? (
-                  <>
-                    <Text style={styles.originalPrice}>${price}</Text>
-                    <Text style={styles.discountedPrice}>${discountedPrice}</Text>
-                  </>
-                ) : (
-                  <Text style={styles.currentPrice}>${price}</Text>
-                )}
-                <Text style={styles.nightText}>/NIGHT</Text>
-              </View>
-            </View>
-          </View>
-
-          {/* Description */}
-          <View style={styles.descriptionSection}>
-            <Text style={styles.sectionTitle}>About This Hotel</Text>
-            <Text style={styles.descriptionText}>{description}</Text>
-          </View>
-
-          {/* Amenities */}
-          <View style={styles.amenitiesSection}>
-            <Text style={styles.sectionTitle}>Amenities</Text>
-            <View style={styles.amenitiesGrid}>
-              {amenities.map((amenity, index) => (
-                <View key={index} style={styles.amenityItem}>
-                  <Icon name={amenity.icon} size={moderateScale(24)} color="#1E2A78" />
-                  <Text style={styles.amenityText}>{amenity.name}</Text>
-                </View>
-              ))}
-            </View>
-          </View>
-
-          {/* Reviews Section */}
-          <View style={styles.reviewsSection}>
-            <View style={styles.reviewsHeader}>
-              <Text style={styles.sectionTitle}>Reviews</Text>
-              <TouchableOpacity style={styles.seeAllReviews}>
-                <Text style={styles.seeAllText}>See All</Text>
-                <Icon name="chevron-right" size={moderateScale(16)} color="#9CA3AF" />
-              </TouchableOpacity>
-            </View>
-            
-            <View style={styles.reviewSummary}>
-              <View style={styles.ratingOverview}>
-                <Text style={styles.overallRating}>{rating}</Text>
-                <View style={styles.starsContainer}>
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <Icon
-                      key={star}
-                      name="star"
-                      size={moderateScale(16)}
-                      color={star <= Math.floor(rating) ? "#FFA500" : "#E5E5E5"}
-                    />
-                  ))}
-                </View>
-                <Text style={styles.reviewsCount}>Based on 1,234 reviews</Text>
-              </View>
-            </View>
-          </View>
-
-          {/* Bottom spacing for button */}
-          <View style={styles.bottomSpacing} />
-        </View>
-      </ScrollView>
-
-      {/* Book Now Button - Fixed at bottom */}
-      <View style={styles.bookingContainer}>
-        <TouchableOpacity
-          style={styles.bookNowButton}
-          onPress={handleBookNow}
-          activeOpacity={0.8}
-        >
-          <Text style={styles.bookNowText}>Book Now</Text>
-        </TouchableOpacity>
-      </View>
-    </SafeAreaView>
-  );
+        </SafeAreaView>
+    );
 };
 
 const styles = StyleSheet.create({

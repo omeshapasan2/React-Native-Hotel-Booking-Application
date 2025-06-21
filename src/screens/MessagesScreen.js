@@ -134,6 +134,10 @@ const MessagesScreen = ({ navigation }) => {
     }
   };
 
+  const handleBackPress = () => {
+    navigation.navigate('Home'); // Navigate back to home screen
+  };
+
   const renderMessage = ({ item }) => {
     const isSelected = selectedMessages.includes(item.id);
     
@@ -186,7 +190,7 @@ const MessagesScreen = ({ navigation }) => {
               <Ionicons 
                 name={isSelected ? "checkmark-circle" : "ellipse-outline"} 
                 size={20} 
-                color={isSelected ? "#007AFF" : "#C7C7CC"} 
+                color={isSelected ? "#1E3A8A" : "#9CA3AF"} 
               />
             </View>
           )}
@@ -198,24 +202,24 @@ const MessagesScreen = ({ navigation }) => {
   const renderHeader = () => (
     <View style={styles.headerContainer}>
       <View style={styles.searchContainer}>
-        <Ionicons name="search" size={20} color="#8E8E93" style={styles.searchIcon} />
+        <Ionicons name="search" size={20} color="#9CA3AF" style={styles.searchIcon} />
         <TextInput
           style={styles.searchInput}
           placeholder="Search messages..."
           value={searchQuery}
           onChangeText={setSearchQuery}
-          placeholderTextColor="#8E8E93"
+          placeholderTextColor="#9CA3AF"
         />
         {searchQuery.length > 0 && (
           <TouchableOpacity onPress={() => setSearchQuery('')}>
-            <Ionicons name="close-circle" size={20} color="#8E8E93" />
+            <Ionicons name="close-circle" size={20} color="#9CA3AF" />
           </TouchableOpacity>
         )}
       </View>
       
       <View style={styles.actionsContainer}>
         <TouchableOpacity style={styles.actionButton} onPress={markAllAsRead}>
-          <Ionicons name="checkmark-done" size={20} color="#007AFF" />
+          <Ionicons name="checkmark-done" size={20} color="#1E3A8A" />
           <Text style={styles.actionText}>Mark All Read</Text>
         </TouchableOpacity>
       </View>
@@ -224,7 +228,7 @@ const MessagesScreen = ({ navigation }) => {
 
   const renderEmptyState = () => (
     <View style={styles.emptyState}>
-      <Ionicons name="mail-outline" size={64} color="#C7C7CC" />
+      <Ionicons name="mail-outline" size={64} color="#9CA3AF" />
       <Text style={styles.emptyStateTitle}>No messages found</Text>
       <Text style={styles.emptyStateText}>
         {searchQuery ? 'Try adjusting your search terms' : 'You have no messages at the moment'}
@@ -232,10 +236,17 @@ const MessagesScreen = ({ navigation }) => {
     </View>
   );
 
-  const unreadCount = messageList.filter(msg => !msg.isRead).length;
-
   return (
     <SafeAreaView style={styles.container}>
+      {/* Navigation Header */}
+      <View style={styles.navigationHeader}>
+        <TouchableOpacity style={styles.backButton} onPress={handleBackPress}>
+          <Ionicons name="arrow-back" size={24} color="#FFFFFF" />
+        </TouchableOpacity>
+        <Text style={styles.screenTitle}>Messages</Text>
+        <View style={styles.placeholder} />
+      </View>
+
       {/* Selection Mode Header */}
       {isSelectionMode && (
         <View style={styles.selectionHeader}>
@@ -262,16 +273,6 @@ const MessagesScreen = ({ navigation }) => {
         </View>
       )}
 
-      {/* Messages Count */}
-      <View style={styles.messagesCount}>
-        <Text style={styles.countText}>
-          {filteredMessages.length} messages
-          {unreadCount > 0 && (
-            <Text style={styles.unreadCount}> • {unreadCount} unread</Text>
-          )}
-        </Text>
-      </View>
-
       <FlatList
         data={filteredMessages}
         renderItem={renderMessage}
@@ -291,7 +292,31 @@ const MessagesScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: '#F8FAFC',
+  },
+  navigationHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#1E3A8A',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    elevation: 4,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+  },
+  backButton: {
+    padding: 8,
+  },
+  screenTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#FFFFFF',
+  },
+  placeholder: {
+    width: 40, // To balance the layout
   },
   listContainer: {
     flexGrow: 1,
@@ -299,7 +324,7 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     padding: 16,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: '#F8FAFC',
   },
   searchContainer: {
     flexDirection: 'row',
@@ -321,7 +346,7 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     fontSize: 16,
-    color: '#1C1C1E',
+    color: '#1F2937',
   },
   actionsContainer: {
     flexDirection: 'row',
@@ -344,21 +369,8 @@ const styles = StyleSheet.create({
   actionText: {
     marginLeft: 4,
     fontSize: 14,
-    color: '#007AFF',
+    color: '#1E3A8A',
     fontWeight: '500',
-  },
-  messagesCount: {
-    paddingHorizontal: 16,
-    paddingBottom: 8,
-  },
-  countText: {
-    fontSize: 14,
-    color: '#8E8E93',
-    fontWeight: '500',
-  },
-  unreadCount: {
-    color: '#FF4444',
-    fontWeight: '600',
   },
   messageContainer: {
     backgroundColor: '#FFFFFF',
@@ -374,11 +386,11 @@ const styles = StyleSheet.create({
   },
   unreadMessage: {
     borderLeftWidth: 4,
-    borderLeftColor: '#007AFF',
+    borderLeftColor: '#1E3A8A',
   },
   selectedMessage: {
-    backgroundColor: '#E3F2FD',
-    borderColor: '#007AFF',
+    backgroundColor: '#EFF6FF',
+    borderColor: '#1E3A8A',
     borderWidth: 1,
   },
   highPriorityMessage: {
@@ -399,26 +411,26 @@ const styles = StyleSheet.create({
   messageTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#1C1C1E',
+    color: '#1F2937',
   },
   unreadTitle: {
-    color: '#007AFF',
+    color: '#1E3A8A',
   },
   priorityIcon: {
     marginLeft: 4,
   },
   timestamp: {
     fontSize: 12,
-    color: '#8E8E93',
+    color: '#6B7280',
   },
   messageText: {
     fontSize: 14,
-    color: '#666666',
+    color: '#6B7280',
     lineHeight: 20,
     marginBottom: 8,
   },
   unreadText: {
-    color: '#1C1C1E',
+    color: '#1F2937',
     fontWeight: '500',
   },
   messageFooter: {
@@ -430,7 +442,7 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: '#007AFF',
+    backgroundColor: '#1E3A8A',
   },
   selectionIndicator: {
     marginLeft: 'auto',
@@ -443,19 +455,19 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     backgroundColor: '#FFFFFF',
     borderBottomWidth: 1,
-    borderBottomColor: '#E5E5EA',
+    borderBottomColor: '#E5E7EB',
   },
   selectionAction: {
     paddingVertical: 4,
   },
   selectionActionText: {
     fontSize: 16,
-    color: '#007AFF',
+    color: '#1E3A8A',
   },
   selectionTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#1C1C1E',
+    color: '#1F2937',
   },
   emptyState: {
     flex: 1,
@@ -467,13 +479,13 @@ const styles = StyleSheet.create({
   emptyStateTitle: {
     fontSize: 20,
     fontWeight: '600',
-    color: '#1C1C1E',
+    color: '#1F2937',
     marginTop: 16,
     marginBottom: 8,
   },
   emptyStateText: {
     fontSize: 16,
-    color: '#8E8E93',
+    color: '#6B7280',
     textAlign: 'center',
     lineHeight: 22,
   },

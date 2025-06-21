@@ -9,8 +9,10 @@ import {
 import Entypo from '@expo/vector-icons/Entypo';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { useNavigation } from '@react-navigation/native';
 
 const BottomNavigation = () => {
+  const navigation = useNavigation();
   const [activeTab, setActiveTab] = useState('Home');
 
   const tabs = [
@@ -19,31 +21,39 @@ const BottomNavigation = () => {
       icon: 'home',
       iconLibrary: 'Entypo',
       label: 'Home',
+      screenName: 'Home',
     },
     {
       name: 'MyTrip',
       icon: 'ticket-confirmation',
       iconLibrary: 'MaterialCommunityIcons',
       label: 'My Trip',
+      screenName: null,
     },
     {
       name: 'Favorite',
       icon: 'bookmark-added',
       iconLibrary: 'MaterialIcons',
       label: 'Favorite',
+      screenName: 'Favorites',
     },
     {
       name: 'Profile',
       icon: 'account',
       iconLibrary: 'MaterialCommunityIcons',
       label: 'Profile',
+      screenName: null,
     },
   ];
 
-  const handleTabPress = (tabName) => {
-    setActiveTab(tabName);
-    // Here you would typically handle navigation
-    console.log(`Navigating to ${tabName}`);
+  const handleTabPress = (tab) => {
+    setActiveTab(tab.name);
+    // Navigate to the corresponding screen if it exists
+    if (tab.screenName) {
+      navigation.navigate(tab.screenName);
+    } else {
+      console.log(`${tab.name} screen not implemented yet`);
+    }
   };
 
   const renderIcon = (tab) => {
@@ -70,7 +80,7 @@ const BottomNavigation = () => {
           <TouchableOpacity
             key={tab.name}
             style={styles.tabButton}
-            onPress={() => handleTabPress(tab.name)}
+            onPress={() => handleTabPress(tab)}
             activeOpacity={0.7}
           >
             <View style={styles.tabContent}>

@@ -26,7 +26,7 @@ const locations = [
   'Unawatuna, Sri Lanka'
 ];
 
-const TopNearbySection = () => {
+const TopNearbySection = ({ navigation }) => {
   const [selectedLocation, setSelectedLocation] = useState('Sleman, DIY');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { getHotelsWithFavorites, toggleFavorite } = useFavorites();
@@ -123,6 +123,7 @@ const TopNearbySection = () => {
             hotel={hotel}
             onPress={handleHotelPress}
             onFavoritePress={handleFavoritePress}
+            navigation={navigation}
           />
         ))}
       </View>

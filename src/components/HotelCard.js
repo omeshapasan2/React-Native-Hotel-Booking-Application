@@ -18,7 +18,7 @@ const moderateScale = (size, factor = 0.5) => size + (scale(size) - size) * fact
 
 const cardWidth = (width - scale(48)) / 2; // Responsive card width
 
-const HotelCard = ({ hotel, onPress, onFavoritePress }) => {
+const HotelCard = ({ hotel, onPress, onFavoritePress, navigation }) => {
   const {
     id,
     name,
@@ -36,10 +36,15 @@ const HotelCard = ({ hotel, onPress, onFavoritePress }) => {
     }
   };
 
+  // press handler to navigate to HotelScreen
+  const handleCardPress = () => {
+    navigation.navigate('Hotel', { hotel });
+  };
+
   return (
     <TouchableOpacity
       style={styles.card}
-      onPress={() => onPress && onPress(hotel)}
+      onPress={handleCardPress} // Updated to use new handler
       activeOpacity={0.8}
     >
       <View style={styles.imageContainer}>
@@ -93,6 +98,7 @@ const HotelCard = ({ hotel, onPress, onFavoritePress }) => {
     </TouchableOpacity>
   );
 };
+
 
 const styles = StyleSheet.create({
   card: {

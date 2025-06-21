@@ -4,12 +4,15 @@ import BottomNavigation from '../components/BottomNavigation';
 import CategoryTabs from '../components/CategoryTabs';
 import SearchBar from '../components/SearchBar';
 import TopNearbySection from '../components/TopNearbySection';
+import { useNavigation } from '@react-navigation/native';
+
 
 function HomeScreen() {
+  const navigation = useNavigation();
   
   return (
     <View style={styles.container}>
-      <Header />
+      <Header navigation={navigation}/>
       <SearchBar/>
       
       <ScrollView
@@ -18,11 +21,11 @@ function HomeScreen() {
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
       >
-        <CategoryTabs />
-        <TopNearbySection/>
+        <CategoryTabs navigation={navigation}/>
+        <TopNearbySection navigation={navigation}/>
       </ScrollView>
       
-      <BottomNavigation />
+
     </View>
   );
 }

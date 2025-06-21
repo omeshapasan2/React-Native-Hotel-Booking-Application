@@ -11,12 +11,12 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const { width, height } = Dimensions.get('window');
 
-// Responsive scaling functions
+// scaling functions
 const scale = (size) => (width / 375) * size;
 const verticalScale = (size) => (height / 812) * size;
 const moderateScale = (size, factor = 0.5) => size + (scale(size) - size) * factor;
 
-const WideHotelCard = ({ hotel, onPress, onFavoritePress }) => {
+const WideHotelCard = ({ hotel, onPress, onFavoritePress, navigation }) => {
   const {
     id,
     name,
@@ -34,10 +34,15 @@ const WideHotelCard = ({ hotel, onPress, onFavoritePress }) => {
     }
   };
 
+  // press handler to navigate to HotelScreen
+  const handleCardPress = () => {
+    navigation.navigate('Hotel', { hotel });
+  };
+
   return (
     <TouchableOpacity
       style={styles.card}
-      onPress={() => onPress && onPress(hotel)}
+      onPress={handleCardPress} // Updated to use new handler
       activeOpacity={0.8}
     >
       <View style={styles.imageContainer}>
@@ -92,13 +97,14 @@ const WideHotelCard = ({ hotel, onPress, onFavoritePress }) => {
   );
 };
 
+
 const styles = StyleSheet.create({
   card: {
     width: width - scale(32),
     height: verticalScale(120),
     backgroundColor: '#FFF',
     borderRadius: scale(12),
-    marginBottom: verticalScale(12), // Reduced gap between cards
+    marginBottom: verticalScale(12),
     borderWidth: 1,
     borderColor: '#E0E0E0',
     flexDirection: 'row',

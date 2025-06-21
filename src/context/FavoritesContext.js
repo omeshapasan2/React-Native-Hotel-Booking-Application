@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const FavoritesContext = createContext();
 
 export const FavoritesProvider = ({ children }) => {
+  const [favorites, setFavorites] = useState([]);
   const [favoriteIds, setFavoriteIds] = useState(new Set([1, 3])); // Initialize with your default favorites
 
   // Load favorites from storage on app start

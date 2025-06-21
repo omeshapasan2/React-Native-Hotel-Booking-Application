@@ -12,7 +12,7 @@ const scale = (size) => (width / 375) * size;
 const verticalScale = (size) => (height / 812) * size;
 const moderateScale = (size, factor = 0.5) => size + (scale(size) - size) * factor;
 
-const CategoryTabs = () => {
+const CategoryTabs = ({ navigation }) => {
   const [selectedCategory, setSelectedCategory] = useState('Popular');
   const { getHotelsWithFavorites, toggleFavorite } = useFavorites();
 
@@ -28,11 +28,16 @@ const CategoryTabs = () => {
     toggleFavorite(hotelId);
   };
 
-  const handleHotelPress = (hotel) => {
-    console.log('Navigate to hotel detail:', hotel.name);
-    // Add navigation logic here if needed
-    // navigation.navigate('HotelDetail', { hotel });
-  };
+  // Updated to remove individual hotel press handler since navigation is now handled in HotelCard
+  const renderHotelCard = ({ item }) => (
+    <View style={styles.cardWrapper}>
+      <HotelCard
+        hotel={item}
+        onFavoritePress={handleFavoritePress}
+        navigation={navigation} // Pass navigation to HotelCard
+      />
+    </View>
+  );
 
   const renderCategoryTab = (category) => (
     <TouchableOpacity
@@ -52,16 +57,6 @@ const CategoryTabs = () => {
         {category}
       </Text>
     </TouchableOpacity>
-  );
-
-  const renderHotelCard = ({ item }) => (
-    <View style={styles.cardWrapper}>
-      <HotelCard
-        hotel={item}
-        onPress={handleHotelPress}
-        onFavoritePress={handleFavoritePress}
-      />
-    </View>
   );
 
   return (
@@ -96,7 +91,7 @@ const CategoryTabs = () => {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.horizontalFlatListContent}
           ItemSeparatorComponent={() => <View style={styles.cardSeparator} />}
-          snapToInterval={scale(188)} // Adjusted for card width + separator
+          snapToInterval={scale(188)}
           decelerationRate="fast"
           snapToAlignment="start"
         />
@@ -104,6 +99,7 @@ const CategoryTabs = () => {
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {
@@ -166,10 +162,10 @@ const styles = StyleSheet.create({
     // Container for the horizontal list
   },
   cardWrapper: {
-    width: scale(180), // Fixed width for each card
+    width: scale(180),
   },
   cardSeparator: {
-    width: scale(8), // Space between cards
+    width: scale(8),
   },
   horizontalFlatListContent: {
     paddingHorizontal: scale(16),

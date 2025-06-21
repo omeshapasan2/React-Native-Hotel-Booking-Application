@@ -12,6 +12,7 @@ import WideHotelCard from '../components/WideHotelCard';
 import HotelCard from '../components/HotelCard';
 import { useFavorites } from '../context/FavoritesContext';
 import hotels from '../data/hotels'; // Import your hotels data
+import BottomNavigation from '../components/BottomNavigation';
 
 const { width, height } = Dimensions.get('window');
 
@@ -55,6 +56,7 @@ function FavoriteScreen({ navigation }) {
           hotel={item}
           onPress={handleHotelPress}
           onFavoritePress={handleFavoritePress}
+          navigation={navigation}
         />
       );
     } else {
@@ -63,6 +65,7 @@ function FavoriteScreen({ navigation }) {
           hotel={item}
           onPress={handleHotelPress}
           onFavoritePress={handleFavoritePress}
+          navigation={navigation}
         />
       );
     }
@@ -106,7 +109,9 @@ function FavoriteScreen({ navigation }) {
       ) : (
         renderEmptyState()
       )}
+
     </View>
+    
   );
 }
 
