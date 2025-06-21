@@ -8,10 +8,15 @@ import {
   Dimensions,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import hotels from '../data/hotels';
 
-const { width } = Dimensions.get('window');
-const cardWidth = (width - 48) / 2; 
+const { width, height } = Dimensions.get('window');
+
+// Responsive scaling functions
+const scale = (size) => (width / 375) * size;
+const verticalScale = (size) => (height / 812) * size;
+const moderateScale = (size, factor = 0.5) => size + (scale(size) - size) * factor;
+
+const cardWidth = (width - scale(48)) / 2; // Responsive card width
 
 const HotelCard = ({ hotel, onPress, onFavoritePress }) => {
   const {
@@ -44,7 +49,7 @@ const HotelCard = ({ hotel, onPress, onFavoritePress }) => {
           resizeMode="cover"
         />
         <View style={styles.ratingContainer}>
-          <Icon name="star" size={12} color="#FFA500" />
+          <Icon name="star" size={moderateScale(12)} color="#FFA500" />
           <Text style={styles.ratingText}>{rating}</Text>
         </View>
       </View>
@@ -54,7 +59,7 @@ const HotelCard = ({ hotel, onPress, onFavoritePress }) => {
           {name}
         </Text>
         <View style={styles.locationContainer}>
-          <Icon name="location-on" size={12} color="#FFA500" />
+          <Icon name="location-on" size={moderateScale(12)} color="#FFA500" />
           <Text style={styles.locationText}>{location}</Text>
         </View>
         
@@ -80,7 +85,7 @@ const HotelCard = ({ hotel, onPress, onFavoritePress }) => {
         >
           <Icon
             name={isFavorite ? "favorite" : "favorite-border"}
-            size={20}
+            size={moderateScale(20)}
             color={isFavorite ? "#FF6B9D" : "#FF6B9D"}
           />
         </TouchableOpacity>
@@ -93,16 +98,16 @@ const styles = StyleSheet.create({
   card: {
     width: cardWidth,
     backgroundColor: '#FFF',
-    borderRadius: 12,
-    marginBottom: 16,
+    borderRadius: scale(12),
+    marginBottom: verticalScale(16),
     borderWidth: 1,
     borderColor: '#E0E0E0',
   },
   imageContainer: {
     position: 'relative',
-    height: 120,
-    borderTopLeftRadius: 12,
-    borderTopRightRadius: 12,
+    height: verticalScale(120),
+    borderTopLeftRadius: scale(12),
+    borderTopRightRadius: scale(12),
     overflow: 'hidden',
   },
   image: {
@@ -111,82 +116,82 @@ const styles = StyleSheet.create({
   },
   ratingContainer: {
     position: 'absolute',
-    top: 8,
-    right: 8,
+    top: scale(8),
+    right: scale(8),
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.6)',
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-    borderRadius: 4,
+    paddingHorizontal: scale(6),
+    paddingVertical: verticalScale(2),
+    borderRadius: scale(4),
   },
   ratingText: {
     color: '#FFF',
-    fontSize: 11,
+    fontSize: moderateScale(11),
     fontWeight: '600',
-    marginLeft: 2,
+    marginLeft: scale(2),
   },
   content: {
-    padding: 12,
+    padding: scale(12),
     position: 'relative',
   },
   hotelName: {
-    fontSize: 16,
+    fontSize: moderateScale(16),
     fontWeight: '800',
     color: '#333',
-    marginBottom: 6,
+    marginBottom: verticalScale(6),
   },
   locationContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 12,
+    marginBottom: verticalScale(12),
   },
   locationText: {
-    fontSize: 12,
+    fontSize: moderateScale(12),
     color: '#666',
-    marginLeft: 2,
+    marginLeft: scale(2),
   },
   priceContainer: {
-    marginTop: 4,
+    marginTop: verticalScale(4),
   },
   startFromText: {
-    fontSize: 11,
+    fontSize: moderateScale(11),
     color: '#999',
-    marginBottom: 2,
+    marginBottom: verticalScale(2),
   },
   priceRow: {
     flexDirection: 'row',
     alignItems: 'baseline',
   },
   price: {
-    fontSize: 18,
+    fontSize: moderateScale(18),
     fontWeight: '700',
     color: '#333',
   },
   originalPrice: {
-    fontSize: 14,
+    fontSize: moderateScale(14),
     color: '#999',
     textDecorationLine: 'line-through',
-    marginRight: 4,
+    marginRight: scale(4),
   },
   discountedPrice: {
-    fontSize: 18,
+    fontSize: moderateScale(18),
     fontWeight: '700',
     color: '#FF6B9D',
   },
   nightText: {
-    fontSize: 10,
+    fontSize: moderateScale(10),
     color: '#999',
-    marginLeft: 2,
+    marginLeft: scale(2),
   },
   favoriteButton: {
     position: 'absolute',
-    bottom: 12,
-    right: 12,
-    width: 32,
-    height: 32,
+    bottom: scale(12),
+    right: scale(12),
+    width: scale(32),
+    height: scale(32),
     backgroundColor: 'rgba(255, 107, 157, 0.1)',
-    borderRadius: 8,
+    borderRadius: scale(8),
     justifyContent: 'center',
     alignItems: 'center',
   },

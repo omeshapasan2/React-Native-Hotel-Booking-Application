@@ -24,7 +24,7 @@ const hotels = [
     {
         id: 3,
         name: "Keraton Villa",
-        category: ["Modern"],
+        category: ["Popular","Modern"],
         image: require("../assets/images/hotels/KeratonVilla.jpg"),
         rating: 4.8,
         price: 225,

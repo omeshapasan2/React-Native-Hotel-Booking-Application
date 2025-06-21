@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, ScrollView, StyleSheet, Dimensions } from 'react-native';
 import hotels from '../data/hotels'
 import HotelCard from './HotelCard';
 
+const { width, height } = Dimensions.get('window');
 const categories = ['Popular', 'Modern', 'Beach', 'Mountain', 'Luxury', 'Budget'];
+
+// Responsive scaling function
+const scale = (size) => (width / 375) * size;
+const verticalScale = (size) => (height / 812) * size;
+const moderateScale = (size, factor = 0.5) => size + (scale(size) - size) * factor;
 
 const CategoryTabs = () => {
   const [selectedCategory, setSelectedCategory] = useState('Popular');
 
-  // Filter the hotels based on selected category
   const filteredHotels = hotels.filter(hotel =>
     hotel.category.includes(selectedCategory)
   );
@@ -33,6 +38,12 @@ const CategoryTabs = () => {
     </TouchableOpacity>
   );
 
+  const renderHotelCard = ({ item }) => (
+    <View style={styles.cardWrapper}>
+      <HotelCard hotel={item} />
+    </View>
+  );
+
   return (
     <View style={styles.container}>
       {/* Category Header */}
@@ -44,7 +55,7 @@ const CategoryTabs = () => {
         </TouchableOpacity>
       </View>
 
-      {/* Category Tab Bar - Full Width Scrollable */}
+      {/* Category Tab Bar */}
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -54,17 +65,20 @@ const CategoryTabs = () => {
         {categories.map(renderCategoryTab)}
       </ScrollView>
 
-      {/* Hotel Cards List */}
+      {/* Hotel Cards List - Now Horizontal */}
       <View style={styles.hotelListContainer}>
         <FlatList
+          key="horizontal-hotel-list" // Add key to force fresh render
           data={filteredHotels}
           keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => <HotelCard hotel={item} />}
-          numColumns={2}
-          columnWrapperStyle={{ justifyContent: 'space-between', marginBottom: 0 }}
-          contentContainerStyle={{ paddingBottom: 0 }} // Remove bottom padding
-          showsVerticalScrollIndicator={false}
-          scrollEnabled={false} // Disable inner scrolling since parent handles it
+          renderItem={renderHotelCard}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.horizontalFlatListContent}
+          ItemSeparatorComponent={() => <View style={styles.cardSeparator} />}
+          snapToInterval={scale(280)} // Adjust based on your card width
+          decelerationRate="fast"
+          snapToAlignment="start"
         />
       </View>
     </View>
@@ -73,52 +87,44 @@ const CategoryTabs = () => {
 
 const styles = StyleSheet.create({
   container: {
-    // marginBottom: 16, // Add consistent bottom margin for spacing
+    marginBottom: verticalScale(20), // Responsive bottom margin
   },
-
-  // Category Header
   headerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 16,
-    paddingHorizontal: 16,
+    marginBottom: verticalScale(16),
+    paddingHorizontal: scale(16),
   },
-
-  // Category Title
   categoryTitle: {
-    fontSize: 22,
+    fontSize: moderateScale(22),
     fontWeight: 'bold',
     color: '#000',
   },
-
-  // See All Button
   seeAllButton: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   seeAllText: {
-    fontSize: 16,
+    fontSize: moderateScale(16),
     color: '#9CA3AF',
   },
   chevron: {
-    fontSize: 16,
+    fontSize: moderateScale(16),
     color: '#9CA3AF',
   },
-  // Between the cards and tab bar
   tabContainer: {
-    marginBottom: 16,
+    marginBottom: verticalScale(16),
     flexGrow: 0,
   },
-  // Tab bar left side padding
   tabContentContainer: {
-    paddingHorizontal: 16,
+    paddingHorizontal: scale(16),
   },
   tabButton: {
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 25,
-    marginRight: 12,
+    paddingHorizontal: scale(20),
+    paddingVertical: verticalScale(10),
+    borderRadius: scale(25),
+    marginRight: scale(12),
     borderWidth: 1,
     borderColor: '#D1D5DB',
     backgroundColor: 'transparent',
@@ -129,15 +135,24 @@ const styles = StyleSheet.create({
   },
   tabText: {
     color: '#6B7280',
-    fontSize: 16,
+    fontSize: moderateScale(16),
     fontWeight: '500',
   },
   activeTabText: {
     color: '#FFFFFF',
   },
-  // Space Between hotel cards
   hotelListContainer: {
-    paddingHorizontal: 16,
+    // Remove horizontal padding to allow full-width scrolling
+  },
+  cardWrapper: {
+    width: scale(180), // Set a fixed width for each card
+    // You can adjust this width based on your HotelCard component size
+  },
+  cardSeparator: {
+    // width: scale(8), // Reduced space between cards
+  },
+  horizontalFlatListContent: {
+    paddingHorizontal: scale(16), // Add padding to the content
   },
 });
 

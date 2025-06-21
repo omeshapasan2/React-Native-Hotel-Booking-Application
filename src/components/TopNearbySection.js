@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import hotels from '../data/hotels';
 import WideHotelCard from './WideHotelCard';
+
+const { width, height } = Dimensions.get('window');
+
+// Responsive scaling functions
+const scale = (size) => (width / 375) * size;
+const verticalScale = (size) => (height / 812) * size;
+const moderateScale = (size, factor = 0.5) => size + (scale(size) - size) * factor;
 
 const locations = [
   'Sleman, DIY',
@@ -16,18 +23,15 @@ const TopNearbySection = () => {
   const [selectedLocation, setSelectedLocation] = useState('Sleman, DIY');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  // Filter hotels based on selected location
   const filteredHotels = hotels.filter(hotel => 
     hotel.location === selectedLocation
   );
 
   const handleFavoritePress = (hotelId) => {
-    // Handle favorite toggle logic here
     console.log('Favorite pressed for hotel:', hotelId);
   };
 
   const handleHotelPress = (hotel) => {
-    // Handle hotel selection logic here
     console.log('Hotel pressed:', hotel.name);
   };
 
@@ -41,7 +45,7 @@ const TopNearbySection = () => {
       {/* Header */}
       <View style={styles.headerContainer}>
         <View style={styles.titleContainer}>
-          <MaterialIcons name="near-me" size={24} color="#FFA500" />
+          <MaterialIcons name="near-me" size={moderateScale(24)} color="#FFA500" />
           <Text style={styles.title}>Top Nearby</Text>
         </View>
 
@@ -54,20 +58,22 @@ const TopNearbySection = () => {
                 style={styles.dropdownButton}
                 onPress={() => setIsDropdownOpen(!isDropdownOpen)}
               >
-                <Text style={styles.locationText}>{selectedLocation}</Text>
+                <Text style={styles.locationText} numberOfLines={1}>
+                  {selectedLocation}
+                </Text>
                 <MaterialIcons 
                   name={isDropdownOpen ? "keyboard-arrow-up" : "keyboard-arrow-down"} 
-                  size={16} 
+                  size={moderateScale(16)} 
                   color="#1E2A78" 
                 />
               </TouchableOpacity>
             </View>
             <View style={styles.locationIconContainer}>
-              <MaterialIcons name="gps-fixed" size={20} color="#1E2A78" />
+              <MaterialIcons name="gps-fixed" size={moderateScale(20)} color="#1E2A78" />
             </View>
           </View>
 
-          {/* Dropdown Menu */}
+          {/* Dropdown Menu - Fixed positioning */}
           {isDropdownOpen && (
             <View style={styles.dropdownMenu}>
               {locations.map((location, index) => (
@@ -75,11 +81,12 @@ const TopNearbySection = () => {
                   key={index}
                   style={[
                     styles.dropdownItem,
-                    location === selectedLocation && styles.selectedItem
+                    location === selectedLocation && styles.selectedItem,
+                    index === locations.length - 1 && styles.lastDropdownItem
                   ]}
                   onPress={() => handleLocationSelect(location)}
                 >
-                  <MaterialIcons name="location-on" size={14} color="#1E2A78" />
+                  <MaterialIcons name="location-on" size={moderateScale(14)} color="#1E2A78" />
                   <Text style={[
                     styles.dropdownItemText,
                     location === selectedLocation && styles.selectedItemText
@@ -93,7 +100,7 @@ const TopNearbySection = () => {
         </View>
       </View>
 
-      {/* Hotel List - Changed from FlatList to map for better integration */}
+      {/* Hotel List */}
       <View style={styles.hotelListContainer}>
         {filteredHotels.map((hotel) => (
           <WideHotelCard
@@ -110,31 +117,32 @@ const TopNearbySection = () => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 16,
-    // marginTop: 16, // Reduced from default, adjust as needed
+    paddingHorizontal: scale(16),
+    marginTop: verticalScale(8), // Reduced gap from CategoryTabs
   },
   headerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 16, // Consistent spacing
-    zIndex: 9998,
+    marginBottom: verticalScale(16),
     position: 'relative',
+    zIndex: 1000,
   },
   titleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    flex: 1,
   },
   title: {
-    fontSize: 22,
+    fontSize: moderateScale(22),
     fontWeight: 'bold',
     color: '#000',
-    marginLeft: 8,
+    marginLeft: scale(8),
   },
   dropdownContainer: {
     position: 'relative',
-    elevation: 10,
-    zIndex: 9999,
+    zIndex: 1001,
+    minWidth: scale(160),
   },
   locationSection: {
     flexDirection: 'row',
@@ -142,40 +150,42 @@ const styles = StyleSheet.create({
   },
   locationContent: {
     flex: 1,
+    alignItems: 'flex-end',
   },
   locationLabel: {
-    fontSize: 12,
+    fontSize: moderateScale(12),
     color: '#999',
-    marginBottom: 2,
-    alignSelf: 'flex-end',
+    marginBottom: verticalScale(2),
   },
   dropdownButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
+    maxWidth: scale(120),
   },
   locationText: {
-    fontSize: 14,
+    fontSize: moderateScale(14),
     color: '#1E2A78',
     fontWeight: '600',
-    marginRight: 4,
+    marginRight: scale(4),
+    textAlign: 'right',
   },
   locationIconContainer: {
     backgroundColor: '#F5F5F5',
-    borderRadius: 6,
-    padding: 8,
-    marginLeft: 8,
-    height: 40,
-    width: 36,
+    borderRadius: scale(6),
+    padding: scale(8),
+    marginLeft: scale(8),
+    height: verticalScale(40),
+    width: scale(36),
     justifyContent: 'center',
     alignItems: 'center',
   },
   dropdownMenu: {
-    position: 'relative',
+    position: 'absolute',
     top: '100%',
     right: 0,
     backgroundColor: '#FFF',
-    borderRadius: 8,
+    borderRadius: scale(8),
     borderWidth: 1,
     borderColor: '#E9ECEF',
     shadowColor: '#000',
@@ -183,34 +193,40 @@ const styles = StyleSheet.create({
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.15,
     shadowRadius: 8,
-    elevation: 10,
-    minWidth: 160,
-    zIndex: 10000,
+    elevation: 15,
+    minWidth: scale(180),
+    maxWidth: scale(220),
+    zIndex: 1002,
+    marginTop: verticalScale(4),
   },
   dropdownItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 12,
-    paddingVertical: 10,
+    paddingHorizontal: scale(12),
+    paddingVertical: verticalScale(12),
     borderBottomWidth: 1,
     borderBottomColor: '#F1F3F4',
+  },
+  lastDropdownItem: {
+    borderBottomWidth: 0,
   },
   selectedItem: {
     backgroundColor: '#F0F4FF',
   },
   dropdownItemText: {
-    fontSize: 14,
+    fontSize: moderateScale(14),
     color: '#333',
-    marginLeft: 6,
+    marginLeft: scale(8),
+    flex: 1,
   },
   selectedItemText: {
     color: '#1E2A78',
     fontWeight: '600',
   },
   hotelListContainer: {
-    // gap: 12, // Consistent gap between hotel cards
+    marginTop: verticalScale(8),
   },
 });
 

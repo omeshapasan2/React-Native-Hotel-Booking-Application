@@ -1,5 +1,3 @@
-HomeScreen.js
-
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import Header from '../components/Header';
@@ -16,12 +14,11 @@ function HomeScreen() {
       
       <ScrollView
         style={styles.scrollContainer}
-        contentContainerStyle={[styles.scrollContent, { paddingBottom: 80 }]} // ensure bottom nav doesn't block
+        contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
       >
         <CategoryTabs />
-        <View style={{ height: 0 }} />
         <TopNearbySection/>
       </ScrollView>
       
@@ -39,19 +36,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    paddingBottom: 20,
-  },
-  content: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-  },
-  placeholderText: {
-    fontSize: 16,
-    color: '#666',
-    textAlign: 'center',
-    marginVertical: 5,
+    flexGrow: 1,
+    paddingBottom: 100, // Space for bottom navigation
   },
 });
 
