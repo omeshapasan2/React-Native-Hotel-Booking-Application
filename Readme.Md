@@ -155,17 +155,21 @@ src/
 
 1. **Android APK**
    ```bash
-   expo build:android
+   eas build -p android --profile preview
+   ```
+   or
+   ```bash
+   eas build --platform android
    ```
 
 2. **iOS IPA**
    ```bash
-   expo build:ios
+   eas build --platform ios
    ```
 
-3. **Web Build**
+3. **Alternatively, you can use --platform all option to build for Android and iOS at the same time**
    ```bash
-   expo build:web
+   eas build --platform all
    ```
 
 ## 🤝 Contributing
