@@ -15,6 +15,7 @@ import MessagesScreen from './src/screens/MessagesScreen';
 import BookingScreen from './src/screens/BookingScreen';
 import MyTripsScreen from './src/screens/MyTripsScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
+import SeeAllScreen from './src/screens/SeeAllScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -36,6 +37,7 @@ function App() {
               <Stack.Screen name="Booking" component={BookingScreen} />
               <Stack.Screen name="MyTrips" component={MyTripsScreen} />
               <Stack.Screen name="Profile" component={ProfileScreen} />
+              <Stack.Screen name="SeeAll" component={SeeAllScreen} />
             </Stack.Navigator>
           </View>
           <BottomNavigation />

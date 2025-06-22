@@ -64,7 +64,10 @@ const CategoryTabs = ({ navigation }) => {
       {/* Category Header */}
       <View style={styles.headerContainer}>
         <Text style={styles.categoryTitle}>Category</Text>
-        <TouchableOpacity style={styles.seeAllButton}>
+        <TouchableOpacity 
+          style={styles.seeAllButton}
+          onPress={() => navigation.navigate('SeeAll', { category: selectedCategory })}
+        >
           <Text style={styles.seeAllText}>See All</Text>
           <Text style={styles.chevron}> {'>'}</Text>
         </TouchableOpacity>
