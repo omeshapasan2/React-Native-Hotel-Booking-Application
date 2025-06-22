@@ -11,7 +11,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import WideHotelCard from '../components/WideHotelCard';
 import HotelCard from '../components/HotelCard';
 import { useFavorites } from '../context/FavoritesContext';
-import hotels from '../data/hotels'; // Import your hotels data
+import hotels from '../data/hotels';
 import BottomNavigation from '../components/BottomNavigation';
 
 const { width, height } = Dimensions.get('window');

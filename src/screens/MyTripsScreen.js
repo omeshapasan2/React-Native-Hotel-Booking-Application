@@ -170,12 +170,6 @@ const MyTripsScreen = ({ navigation }) => {
 
       {/* Booking Details */}
       <View style={styles.bookingDetails}>
-        {/* <View style={styles.detailRow}>
-          <Icon name="date-range" size={moderateScale(16)} color="#666" />
-          <Text style={styles.detailText}>
-            {formatDateRange(booking.checkInDate, booking.checkOutDate)}
-          </Text>
-        </View> */}
         
         <View style={styles.detailRow}>
           <Icon name="hotel" size={moderateScale(16)} color="#666" />

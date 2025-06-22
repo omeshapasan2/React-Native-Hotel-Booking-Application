@@ -5,12 +5,12 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 const SearchBar = ({ 
   placeholder = "Explore Something fun", 
-  onSearch, 
-  onFilterPress,
-  onSearchResults, // New prop for passing search results
-  onFocus, // New prop for handling focus
-  onBlur, // New prop for handling blur
-  hasActiveFilters = false, // New prop to show filter indicator
+  onSearch, // prop for handling search input
+  onFilterPress, // prop for handling filter button press
+  onSearchResults, // prop for passing search results
+  onFocus, // prop for handling focus
+  onBlur, // prop for handling blur
+  hasActiveFilters = false, // prop to show filter indicator
   style 
 }) => {
   const [searchText, setSearchText] = useState('');
@@ -79,7 +79,7 @@ const SearchBar = ({
           onSubmitEditing={() => onSearch && onSearch(searchText)}
           autoCorrect={false}
           autoCapitalize="none"
-          clearButtonMode="never" // We'll handle this manually
+          clearButtonMode="never"
         />
         {searchText.length > 0 && (
           <TouchableOpacity 
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 16,
     paddingVertical: 8,
-    zIndex: 10, // Ensure search bar is above other elements
+    zIndex: 10,
   },
   searchContainer: {
     flexDirection: 'row',
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#111827',
     paddingVertical: 0,
-    height: 20, // Set explicit height for consistency
+    height: 20,
   },
   clearButton: {
     marginLeft: 8,

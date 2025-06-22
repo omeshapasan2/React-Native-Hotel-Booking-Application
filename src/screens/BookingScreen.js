@@ -19,7 +19,6 @@ const scale = (size) => (width / 375) * size;
 const verticalScale = (size) => (height / 812) * size;
 const moderateScale = (size, factor = 0.5) => size + (scale(size) - size) * factor;
 
-// Simple Icon component for web compatibility
 const Icon = ({ name, size, color, style }) => (
   <Text style={[{ fontSize: size, color }, style]}>
     {name === 'arrow-back' ? '←' : 

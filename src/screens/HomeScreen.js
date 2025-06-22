@@ -100,7 +100,7 @@ function HomeScreen() {
         onFocus={handleSearchFocus}
         onBlur={handleSearchBlur}
         onFilterPress={handleFilterPress}
-        hasActiveFilters={hasActiveFilters} // Pass this to show filter indicator
+        hasActiveFilters={hasActiveFilters}
       />
       
       {/* Filter Modal */}

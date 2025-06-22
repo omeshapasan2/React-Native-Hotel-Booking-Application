@@ -44,7 +44,7 @@ const HotelCard = ({ hotel, onPress, onFavoritePress, navigation }) => {
   return (
     <TouchableOpacity
       style={styles.card}
-      onPress={handleCardPress} // Updated to use new handler
+      onPress={handleCardPress}
       activeOpacity={0.8}
     >
       <View style={styles.imageContainer}>

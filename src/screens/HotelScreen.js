@@ -212,7 +212,7 @@ const HotelScreen = ({ navigation }) => {
             </View>
         </ScrollView>
 
-        {/* Book Now Button - Fixed at bottom */}
+        {/* Book Now Button */}
         <View style={styles.bookingContainer}>
             <TouchableOpacity
             style={styles.bookNowButton}

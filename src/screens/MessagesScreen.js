@@ -16,7 +16,7 @@ import messages from '../data/messages';
 
 const { width, height } = Dimensions.get('window');
 
-// Responsive scaling functions from SeeAllScreen
+// Responsive scaling functions
 const scale = (size) => (width / 375) * size;
 const verticalScale = (size) => (height / 812) * size;
 const moderateScale = (size, factor = 0.5) => size + (scale(size) - size) * factor;
@@ -38,11 +38,11 @@ const MessagesScreen = ({ navigation }) => {
   }, [searchQuery, messageList]);
 
   const loadMessages = () => {
-    // Add read status and timestamp to messages
+    // Add random read status and timestamp to messages
     const messagesWithStatus = messages.map(msg => ({
       ...msg,
-      isRead: Math.random() > 0.5, // Random read status for demo
-      timestamp: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000), // Random timestamp within last week
+      isRead: Math.random() > 0.5,
+      timestamp: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000),
       priority: Math.random() > 0.7 ? 'high' : 'normal',
     }));
     setMessageList(messagesWithStatus);

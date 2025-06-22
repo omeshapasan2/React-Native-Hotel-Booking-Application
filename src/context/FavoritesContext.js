@@ -5,7 +5,7 @@ const FavoritesContext = createContext();
 
 export const FavoritesProvider = ({ children }) => {
   const [favorites, setFavorites] = useState([]);
-  const [favoriteIds, setFavoriteIds] = useState(new Set([1, 3])); // Initialize with your default favorites
+  const [favoriteIds, setFavoriteIds] = useState(new Set([1, 3]));
 
   // Load favorites from storage on app start
   useEffect(() => {

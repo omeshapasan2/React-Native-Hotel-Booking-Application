@@ -122,7 +122,7 @@ const useSearch = (data, searchFields = ['name', 'location', 'category']) => {
     });
   }, [data, searchQuery, searchFields, filters, hasActiveFilters]);
 
-  // Get filtered results without search query (for filter-only results)
+  // Get filtered results without search query
   const filteredResults = useMemo(() => {
     if (!hasActiveFilters) return [];
     return applyFilters(data).sort((a, b) => {

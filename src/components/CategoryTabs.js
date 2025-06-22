@@ -7,7 +7,7 @@ import { useFavorites } from '../context/FavoritesContext';
 const { width, height } = Dimensions.get('window');
 const categories = ['Popular', 'Modern', 'Beach', 'Mountain', 'Luxury', 'Budget'];
 
-// Responsive scaling function
+// Responsive scaling
 const scale = (size) => (width / 375) * size;
 const verticalScale = (size) => (height / 812) * size;
 const moderateScale = (size, factor = 0.5) => size + (scale(size) - size) * factor;
@@ -28,7 +28,7 @@ const CategoryTabs = ({ navigation }) => {
     toggleFavorite(hotelId);
   };
 
-  // Updated to remove individual hotel press handler since navigation is now handled in HotelCard
+  // Render each hotel card
   const renderHotelCard = ({ item }) => (
     <View style={styles.cardWrapper}>
       <HotelCard
@@ -39,6 +39,7 @@ const CategoryTabs = ({ navigation }) => {
     </View>
   );
 
+  // Render each category tab
   const renderCategoryTab = (category) => (
     <TouchableOpacity
       key={category}
@@ -160,9 +161,6 @@ const styles = StyleSheet.create({
   },
   activeTabText: {
     color: '#FFFFFF',
-  },
-  hotelListContainer: {
-    // Container for the horizontal list
   },
   cardWrapper: {
     width: scale(180),
