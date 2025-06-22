@@ -2,7 +2,7 @@
 
 A modern and elegant React Native hotel booking application built with Expo, featuring a sleek UI, smooth animations, and comprehensive booking functionality.
 
-![BookStay App](https://via.placeholder.com/800x400/1E2A78/FFFFFF?text=BookStay+Hotel+Booking+App)
+![BookStay App](https://github.com/omeshapasan2/React-Native-Hotel-Booking-Application/blob/master/assets/icon.png?raw=true)
 
 ## 📱 Download Demo APK
 
