@@ -9,9 +9,17 @@ import {
   TextInput,
   Alert,
   RefreshControl,
+  Dimensions,
 } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import messages from '../data/messages';
+
+const { width, height } = Dimensions.get('window');
+
+// Responsive scaling functions from SeeAllScreen
+const scale = (size) => (width / 375) * size;
+const verticalScale = (size) => (height / 812) * size;
+const moderateScale = (size, factor = 0.5) => size + (scale(size) - size) * factor;
 
 const MessagesScreen = ({ navigation }) => {
   const [messageList, setMessageList] = useState([]);
@@ -170,7 +178,12 @@ const MessagesScreen = ({ navigation }) => {
               {item.title}
             </Text>
             {item.priority === 'high' && (
-              <Ionicons name="alert-circle" size={16} color="#FF4444" style={styles.priorityIcon} />
+              <Ionicons 
+                name="alert-circle" 
+                size={moderateScale(16)} 
+                color="#E53E3E" 
+                style={styles.priorityIcon} 
+              />
             )}
           </View>
           <Text style={styles.timestamp}>{formatTimestamp(item.timestamp)}</Text>
@@ -189,8 +202,8 @@ const MessagesScreen = ({ navigation }) => {
             <View style={styles.selectionIndicator}>
               <Ionicons 
                 name={isSelected ? "checkmark-circle" : "ellipse-outline"} 
-                size={20} 
-                color={isSelected ? "#1E3A8A" : "#9CA3AF"} 
+                size={moderateScale(20)} 
+                color={isSelected ? "#1E2A78" : "#9CA3AF"} 
               />
             </View>
           )}
@@ -202,7 +215,12 @@ const MessagesScreen = ({ navigation }) => {
   const renderHeader = () => (
     <View style={styles.headerContainer}>
       <View style={styles.searchContainer}>
-        <Ionicons name="search" size={20} color="#9CA3AF" style={styles.searchIcon} />
+        <Ionicons 
+          name="search" 
+          size={moderateScale(20)} 
+          color="#9CA3AF" 
+          style={styles.searchIcon} 
+        />
         <TextInput
           style={styles.searchInput}
           placeholder="Search messages..."
@@ -212,23 +230,31 @@ const MessagesScreen = ({ navigation }) => {
         />
         {searchQuery.length > 0 && (
           <TouchableOpacity onPress={() => setSearchQuery('')}>
-            <Ionicons name="close-circle" size={20} color="#9CA3AF" />
+            <Ionicons name="close-circle" size={moderateScale(20)} color="#9CA3AF" />
           </TouchableOpacity>
         )}
       </View>
       
       <View style={styles.actionsContainer}>
         <TouchableOpacity style={styles.actionButton} onPress={markAllAsRead}>
-          <Ionicons name="checkmark-done" size={20} color="#1E3A8A" />
+          <Ionicons name="checkmark-done" size={moderateScale(20)} color="#1E2A78" />
           <Text style={styles.actionText}>Mark All Read</Text>
         </TouchableOpacity>
+      </View>
+
+      {/* Results Count */}
+      <View style={styles.resultsContainer}>
+        <Text style={styles.resultsText}>
+          {filteredMessages.length} message{filteredMessages.length !== 1 ? 's' : ''} found
+          {searchQuery && ` for "${searchQuery}"`}
+        </Text>
       </View>
     </View>
   );
 
   const renderEmptyState = () => (
     <View style={styles.emptyState}>
-      <Ionicons name="mail-outline" size={64} color="#9CA3AF" />
+      <Ionicons name="mail-outline" size={moderateScale(64)} color="#9CA3AF" />
       <Text style={styles.emptyStateTitle}>No messages found</Text>
       <Text style={styles.emptyStateText}>
         {searchQuery ? 'Try adjusting your search terms' : 'You have no messages at the moment'}
@@ -238,13 +264,16 @@ const MessagesScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Navigation Header */}
-      <View style={styles.navigationHeader}>
-        <TouchableOpacity style={styles.backButton} onPress={handleBackPress}>
-          <Ionicons name="arrow-back" size={24} color="#FFFFFF" />
+      {/* Header */}
+      <View style={styles.header}>
+        <TouchableOpacity
+          onPress={handleBackPress}
+          style={styles.backButton}
+        >
+          <Ionicons name="arrow-back" size={moderateScale(24)} color="#333" />
         </TouchableOpacity>
-        <Text style={styles.screenTitle}>Messages</Text>
-        <View style={styles.placeholder} />
+        <Text style={styles.headerTitle}>Messages</Text>
+        <View style={styles.headerRightSpace} />
       </View>
 
       {/* Selection Mode Header */}
@@ -268,7 +297,7 @@ const MessagesScreen = ({ navigation }) => {
             style={styles.selectionAction}
             onPress={handleDeleteSelected}
           >
-            <Ionicons name="trash" size={20} color="#FF4444" />
+            <Ionicons name="trash" size={moderateScale(20)} color="#E53E3E" />
           </TouchableOpacity>
         </View>
       )}
@@ -284,6 +313,7 @@ const MessagesScreen = ({ navigation }) => {
         }
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.listContainer}
+        ItemSeparatorComponent={() => <View style={styles.itemSeparator} />}
       />
     </SafeAreaView>
   );
@@ -292,48 +322,51 @@ const MessagesScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8FAFC',
+    backgroundColor: '#F9FAFB',
   },
-  navigationHeader: {
+  header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#1E3A8A',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    elevation: 4,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
+    paddingHorizontal: scale(16),
+    paddingVertical: verticalScale(12),
+    backgroundColor: '#FFF',
+    borderBottomWidth: 1,
+    borderBottomColor: '#E0E0E0',
   },
   backButton: {
-    padding: 8,
+    width: scale(40),
+    height: scale(40),
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: scale(8),
+    backgroundColor: '#F3F4F6',
   },
-  screenTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#FFFFFF',
+  headerTitle: {
+    fontSize: moderateScale(20),
+    fontWeight: 'bold',
+    color: '#333',
   },
-  placeholder: {
-    width: 40, // To balance the layout
+  headerRightSpace: {
+    width: scale(40),
   },
   listContainer: {
     flexGrow: 1,
-    paddingBottom: 20,
+    paddingBottom: verticalScale(20),
   },
   headerContainer: {
-    padding: 16,
-    backgroundColor: '#F8FAFC',
+    paddingHorizontal: scale(16),
+    paddingVertical: verticalScale(16),
+    backgroundColor: '#F9FAFB',
   },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    marginBottom: 12,
+    borderRadius: scale(12),
+    paddingHorizontal: scale(12),
+    paddingVertical: verticalScale(10),
+    marginBottom: verticalScale(12),
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
@@ -341,96 +374,113 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   searchIcon: {
-    marginRight: 8,
+    marginRight: scale(8),
   },
   searchInput: {
     flex: 1,
-    fontSize: 16,
+    fontSize: moderateScale(16),
     color: '#1F2937',
   },
   actionsContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     alignItems: 'center',
+    marginBottom: verticalScale(12),
   },
   actionButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 12,
-    paddingVertical: 8,
+    paddingHorizontal: scale(12),
+    paddingVertical: verticalScale(8),
     backgroundColor: '#FFFFFF',
-    borderRadius: 8,
+    borderRadius: scale(8),
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 2,
     elevation: 2,
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
   },
   actionText: {
-    marginLeft: 4,
-    fontSize: 14,
-    color: '#1E3A8A',
+    marginLeft: scale(6),
+    fontSize: moderateScale(14),
+    color: '#1E2A78',
+    fontWeight: '500',
+  },
+  resultsContainer: {
+    paddingVertical: verticalScale(8),
+  },
+  resultsText: {
+    fontSize: moderateScale(14),
+    color: '#6B7280',
     fontWeight: '500',
   },
   messageContainer: {
     backgroundColor: '#FFFFFF',
-    marginHorizontal: 16,
-    marginVertical: 4,
-    padding: 16,
-    borderRadius: 12,
+    marginHorizontal: scale(16),
+    padding: scale(16),
+    borderRadius: scale(12),
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 2,
     elevation: 2,
+    borderWidth: 1,
+    borderColor: '#F0F0F0',
   },
   unreadMessage: {
-    borderLeftWidth: 4,
-    borderLeftColor: '#1E3A8A',
+    borderLeftWidth: scale(4),
+    borderLeftColor: '#1E2A78',
+    backgroundColor: '#FAFBFF',
   },
   selectedMessage: {
     backgroundColor: '#EFF6FF',
-    borderColor: '#1E3A8A',
+    borderColor: '#1E2A78',
     borderWidth: 1,
   },
   highPriorityMessage: {
-    borderLeftWidth: 4,
-    borderLeftColor: '#FF4444',
+    borderLeftWidth: scale(4),
+    borderLeftColor: '#E53E3E',
   },
   messageHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 8,
+    alignItems: 'flex-start',
+    marginBottom: verticalScale(8),
   },
   messageTitleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     flex: 1,
+    marginRight: scale(8),
   },
   messageTitle: {
-    fontSize: 16,
+    fontSize: moderateScale(16),
     fontWeight: '600',
     color: '#1F2937',
+    flexShrink: 1,
   },
   unreadTitle: {
-    color: '#1E3A8A',
+    color: '#1E2A78',
+    fontWeight: 'bold',
   },
   priorityIcon: {
-    marginLeft: 4,
+    marginLeft: scale(6),
   },
   timestamp: {
-    fontSize: 12,
+    fontSize: moderateScale(12),
     color: '#6B7280',
+    fontWeight: '500',
   },
   messageText: {
-    fontSize: 14,
+    fontSize: moderateScale(14),
     color: '#6B7280',
-    lineHeight: 20,
-    marginBottom: 8,
+    lineHeight: moderateScale(20),
+    marginBottom: verticalScale(12),
   },
   unreadText: {
-    color: '#1F2937',
+    color: '#374151',
     fontWeight: '500',
   },
   messageFooter: {
@@ -439,10 +489,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   unreadIndicator: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: '#1E3A8A',
+    width: scale(8),
+    height: scale(8),
+    borderRadius: scale(4),
+    backgroundColor: '#1E2A78',
   },
   selectionIndicator: {
     marginLeft: 'auto',
@@ -451,43 +501,48 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingHorizontal: scale(16),
+    paddingVertical: verticalScale(12),
     backgroundColor: '#FFFFFF',
     borderBottomWidth: 1,
-    borderBottomColor: '#E5E7EB',
+    borderBottomColor: '#E0E0E0',
   },
   selectionAction: {
-    paddingVertical: 4,
+    paddingVertical: verticalScale(4),
+    paddingHorizontal: scale(8),
   },
   selectionActionText: {
-    fontSize: 16,
-    color: '#1E3A8A',
+    fontSize: moderateScale(16),
+    color: '#1E2A78',
+    fontWeight: '500',
   },
   selectionTitle: {
-    fontSize: 18,
+    fontSize: moderateScale(18),
     fontWeight: '600',
-    color: '#1F2937',
+    color: '#333',
   },
   emptyState: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 32,
-    paddingTop: 64,
+    paddingHorizontal: scale(32),
+    paddingTop: verticalScale(64),
   },
   emptyStateTitle: {
-    fontSize: 20,
+    fontSize: moderateScale(20),
     fontWeight: '600',
     color: '#1F2937',
-    marginTop: 16,
-    marginBottom: 8,
+    marginTop: verticalScale(16),
+    marginBottom: verticalScale(8),
   },
   emptyStateText: {
-    fontSize: 16,
+    fontSize: moderateScale(16),
     color: '#6B7280',
     textAlign: 'center',
-    lineHeight: 22,
+    lineHeight: moderateScale(22),
+  },
+  itemSeparator: {
+    height: verticalScale(8),
   },
 });
 
