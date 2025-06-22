@@ -10,6 +10,7 @@ const SearchBar = ({
   onSearchResults, // New prop for passing search results
   onFocus, // New prop for handling focus
   onBlur, // New prop for handling blur
+  hasActiveFilters = false, // New prop to show filter indicator
   style 
 }) => {
   const [searchText, setSearchText] = useState('');
@@ -94,15 +95,19 @@ const SearchBar = ({
           </TouchableOpacity>
         )}
         <TouchableOpacity 
-          style={styles.filterButton}
+          style={[
+            styles.filterButton,
+            hasActiveFilters && styles.filterButtonActive
+          ]}
           onPress={onFilterPress}
           activeOpacity={0.7}
         >
           <MaterialCommunityIcons 
             name="tune-variant" 
             size={20} 
-            color="#6366F1"
+            color={hasActiveFilters ? "#FFF" : "#6366F1"}
           />
+          {hasActiveFilters && <View style={styles.filterIndicator} />}
         </TouchableOpacity>
       </View>
     </View>
@@ -157,6 +162,24 @@ const styles = StyleSheet.create({
   filterButton: {
     marginLeft: 12,
     padding: 4,
+    borderRadius: 8,
+    position: 'relative',
+  },
+  filterButtonActive: {
+    backgroundColor: '#6366F1',
+    paddingHorizontal: 8,
+    paddingVertical: 6,
+  },
+  filterIndicator: {
+    position: 'absolute',
+    top: -2,
+    right: -2,
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#EF4444',
+    borderWidth: 1,
+    borderColor: '#FFF',
   },
 });
 

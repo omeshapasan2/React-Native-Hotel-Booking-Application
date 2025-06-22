@@ -9,6 +9,7 @@ import {
   Dimensions,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 const { width, height } = Dimensions.get('window');
 
@@ -17,7 +18,15 @@ const scale = (size) => (width / 375) * size;
 const verticalScale = (size) => (height / 812) * size;
 const moderateScale = (size, factor = 0.5) => size + (scale(size) - size) * factor;
 
-const SearchResults = ({ searchResults, onHotelPress, visible }) => {
+const SearchResults = ({ 
+  searchResults, 
+  onHotelPress, 
+  visible, 
+  resultsText,
+  hasActiveFilters = false,
+  onClearFilters,
+  onClearAll
+}) => {
   if (!visible || searchResults.length === 0) {
     return null;
   }
@@ -87,8 +96,30 @@ const SearchResults = ({ searchResults, onHotelPress, visible }) => {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.resultsTitle}>
-          {searchResults.length} hotel{searchResults.length !== 1 ? 's' : ''} found
+          {resultsText || `${searchResults.length} hotel${searchResults.length !== 1 ? 's' : ''} found`}
         </Text>
+        
+        {hasActiveFilters && (
+          <View style={styles.filterActions}>
+            <TouchableOpacity
+              style={styles.clearFiltersButton}
+              onPress={onClearFilters}
+              activeOpacity={0.7}
+            >
+              <MaterialCommunityIcons name="filter-off" size={14} color="#6366F1" />
+              <Text style={styles.clearFiltersText}>Clear Filters</Text>
+            </TouchableOpacity>
+            
+            <TouchableOpacity
+              style={styles.clearAllButton}
+              onPress={onClearAll}
+              activeOpacity={0.7}
+            >
+              <Icon name="clear-all" size={14} color="#EF4444" />
+              <Text style={styles.clearAllText}>Clear All</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
       
       <FlatList
@@ -105,6 +136,11 @@ const SearchResults = ({ searchResults, onHotelPress, visible }) => {
 
 const styles = StyleSheet.create({
   container: {
+    position: 'absolute',
+    top: 180, // Don't change unless in android version its invisible
+    left: 0,
+    right: 0,
+    zIndex: 1000, 
     backgroundColor: '#FFF',
     marginHorizontal: scale(16),
     marginTop: verticalScale(8),
@@ -129,6 +165,45 @@ const styles = StyleSheet.create({
     fontSize: moderateScale(14),
     fontWeight: '600',
     color: '#6B7280',
+    marginBottom: verticalScale(8),
+  },
+  filterActions: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    gap: scale(12),
+  },
+  clearFiltersButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#EEF2FF',
+    paddingHorizontal: scale(8),
+    paddingVertical: verticalScale(4),
+    borderRadius: scale(12),
+    borderWidth: 1,
+    borderColor: '#6366F1',
+  },
+  clearFiltersText: {
+    fontSize: moderateScale(12),
+    color: '#6366F1',
+    fontWeight: '500',
+    marginLeft: scale(4),
+  },
+  clearAllButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#FEF2F2',
+    paddingHorizontal: scale(8),
+    paddingVertical: verticalScale(4),
+    borderRadius: scale(12),
+    borderWidth: 1,
+    borderColor: '#EF4444',
+  },
+  clearAllText: {
+    fontSize: moderateScale(12),
+    color: '#EF4444',
+    fontWeight: '500',
+    marginLeft: scale(4),
   },
   resultsList: {
     flex: 1,

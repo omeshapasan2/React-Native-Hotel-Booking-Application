@@ -34,7 +34,7 @@ const CategoryTabs = ({ navigation }) => {
       <HotelCard
         hotel={item}
         onFavoritePress={handleFavoritePress}
-        navigation={navigation} // Pass navigation to HotelCard
+        navigation={navigation}
       />
     </View>
   );
